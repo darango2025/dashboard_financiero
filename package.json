@@ -3,20 +3,26 @@
   "version": "1.0.0",
   "description": "Dashboard de analisis financiero de cartera - ADATEC",
   "scripts": {
-    "extract": "node scripts/extract_dashboard_data.js",
-    "export-excel": "node scripts/export_cartera.js",
-    "generate-rag": "node scripts/generate_rag_summaries.js",
-    "serve": "npx http-server public -p 3000 -c-1 --cors",
-    "dev": "npm run extract && npm run generate-rag && npm run serve"
+    "start":      "node server.js",
+    "dev":        "node scripts/preprocess_cartera.js && node server.js",
+    "preprocess": "node scripts/preprocess_cartera.js",
+    "validate":   "node scripts/validate_pipeline.js",
+    "extract":    "node scripts/extract_dashboard_data.js",
+    "export-excel":"node scripts/export_cartera.js",
+    "generate-rag":"node scripts/generate_rag_summaries.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "docx": "^9.6.1",
     "dotenv": "^16.3.1",
+    "exceljs": "^4.4.0",
     "express": "^4.18.2",
     "http-server": "^14.1.1",
     "jsonwebtoken": "^9.0.3",
     "mssql": "^12.5.2",
     "openai": "^4.20.0",
+    "pdfkit": "^0.18.0",
+    "pptxgenjs": "^4.0.1",
     "xlsx": "^0.18.5"
   }
 }

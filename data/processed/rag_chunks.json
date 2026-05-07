@@ -1,0 +1,365 @@
+[
+  {
+    "id": "global_summary",
+    "tipo": "resumen_global",
+    "titulo": "Estado General de la Cartera ADATEC",
+    "contenido": "La cartera de ADATEC tiene un saldo total de $38.374.163.157 distribuido en 89.064 documentos de 2854 clientes activos con 94 vendedores. La cartera vencida asciende a $35.494.977.007 (92.5% del total). La cartera corriente (sin mora) es de $2.879.186.151. El promedio de días de mora en documentos vencidos es de 1038 días. Los 10 principales clientes concentran el 502.2% del saldo total. Fecha de referencia: 2026-05-07.",
+    "tags": [
+      "resumen",
+      "kpi",
+      "global",
+      "saldo",
+      "vencida",
+      "corriente"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "aging_analysis",
+    "tipo": "aging",
+    "titulo": "Análisis de Antigüedad de Cartera (Aging)",
+    "contenido": "Distribución de la cartera por rango de vencimiento: Corriente (sin mora): 749 documentos, $2.879.186.151 (7.5% del total). 1 - 30 días: 1.163 documentos, $1.635.080.228 (4.3% del total). 31 - 60 días: 1.011 documentos, $1.820.123.665 (4.7% del total). 61 - 90 días: 1.260 documentos, $1.713.344.846 (4.5% del total). 91 - 180 días: 4.032 documentos, $6.226.043.693 (16.2% del total). 181 - 360 días: 7.861 documentos, $9.612.176.940 (25.0% del total). Más de 360 días: 72.988 documentos, $14.488.207.635 (37.8% del total). La mayor concentración está en documentos con más de 360 días de mora (37.8% del total), lo que indica cartera de difícil recuperación.",
+    "tags": [
+      "aging",
+      "vencimiento",
+      "mora",
+      "distribucion"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "top_clientes",
+    "tipo": "clientes",
+    "titulo": "Top Clientes Deudores",
+    "contenido": "Los 5 principales clientes deudores son: BAHAMON GUALDRON GINA ANDREA (67040225-0): $162.760.789.513 (424.1% del total, vencido: 100.0%); ELMER ENRIQUE PACHECO POLO (72139503-0): $5.358.074.175 (14.0% del total, vencido: 93.6%); ARISTIZABAL GRISALES HECTOR FABIO (6549981-0): $4.617.920.128 (12.0% del total, vencido: 100.0%); Sin nombre (991520783001-0): $4.613.754.706 (12.0% del total, vencido: 100.0%); WILSON RODOLFO JAIMES FLOREZ (88216979-0): $3.895.788.100 (10.2% del total, vencido: 100.0%). Total de clientes con saldo pendiente: 2854. Clientes con mora alta (>360 días): 2613. Clientes con mora media (91-360 días): 188.",
+    "tags": [
+      "clientes",
+      "deudores",
+      "top",
+      "concentracion"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "vendedores_analysis",
+    "tipo": "vendedores",
+    "titulo": "Cartera por Vendedor",
+    "contenido": "Los 5 principales vendedores por saldo de cartera son: EMPLEADOS: $81.545.199.442 (100.0% vencido, 145 clientes); EXPORTACIONES: $5.203.963.597 (99.9% vencido, 12 clientes); CALI NORTE: $5.008.147.586 (99.2% vencido, 295 clientes); MEDELLIN CENTRO: $4.854.827.224 (98.4% vencido, 166 clientes); VIAJERA ANTIOQUIA: $3.440.361.794 (99.4% vencido, 294 clientes). Total vendedores activos: 94.",
+    "tags": [
+      "vendedores",
+      "cartera",
+      "distribucion"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "tendencia_mensual",
+    "tipo": "tendencia",
+    "titulo": "Tendencia Mensual de Cartera",
+    "contenido": "Últimos 6 meses de cartera: 2025-12: $2.135.279.579 (1599 docs, vencido: $2.135.279.579); 2026-01: $2.373.552.430 (1086 docs, vencido: $2.373.552.430); 2026-02: $1.112.608.334 (1106 docs, vencido: $1.112.608.334); 2026-03: $2.170.081.644 (1195 docs, vencido: $1.266.551.091); 2026-04: $2.374.629.323 (1246 docs, vencido: $481.278.182); 2026-05: $88.030.572 (135 docs, vencido: $5.726.115). Tendencia de los últimos 12 meses: 2025-06: $906.715.280, 2025-07: $1.705.094.651, 2025-08: $2.043.503.098, 2025-09: $1.274.495.945, 2025-10: $2.091.765.050, 2025-11: $2.311.936.353, 2025-12: $2.135.279.579, 2026-01: $2.373.552.430, 2026-02: $1.112.608.334, 2026-03: $2.170.081.644, 2026-04: $2.374.629.323, 2026-05: $88.030.572.",
+    "tags": [
+      "tendencia",
+      "mensual",
+      "evolucion",
+      "periodo"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "risk_indicators",
+    "tipo": "riesgos",
+    "titulo": "Indicadores de Riesgo",
+    "contenido": "Indicadores de riesgo detectados: [CRITICO] 92.5% de la cartera está vencida; [CRITICO] Mora promedio superior a 1 año: 1038 días; [ALTO] 2613 clientes con mora mayor a 360 días; [MEDIO] Alta concentración: top 10 clientes = 502.2% del total. Clientes con riesgo alto: 2613. Concentración top 10: 502.2%. La cartera muestra señales de deterioro significativo dado que 92.5% está vencida.",
+    "tags": [
+      "riesgo",
+      "alertas",
+      "concentracion",
+      "deterioro"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "tipo_documento",
+    "tipo": "tipos_documento",
+    "titulo": "Distribución por Tipo de Documento",
+    "contenido": "Tipos de documento con mayor saldo: F020: 55183 docs, $266.051.032.311; F011: 4374 docs, $9.992.044.385; F021: 187 docs, $5.187.606.081; F005: 1592 docs, $3.942.458.756; F013: 35 docs, $885.568.592. Total tipos de documento: 50.",
+    "tags": [
+      "tipo_documento",
+      "distribucion",
+      "facturas"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "data_limitations",
+    "tipo": "limitaciones",
+    "titulo": "Limitaciones y Métricas No Disponibles",
+    "contenido": "Métricas que NO se pueden calcular con los datos disponibles: Recaudo / Pagos (El Excel no contiene tabla de pagos o abonos aplicados); Facturación vs Recaudo mensual (El Excel solo tiene saldos pendientes, no pagos recibidos); Rentabilidad por cliente (No hay columna de costo o margen). El archivo Excel solo contiene saldos pendientes de cartera, no registros de pagos/recaudos, ni datos de facturación nueva. Los datos de cartera representan documentos con saldo > 0 al momento de la exportación.",
+    "tags": [
+      "limitaciones",
+      "datos_faltantes",
+      "metodologia"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_67040225-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: BAHAMON GUALDRON GINA ANDREA",
+    "contenido": "Cliente BAHAMON GUALDRON GINA ANDREA (código 67040225-0, NIT: 67040225, ciudad: CALI): Saldo total $162.760.789.513 (424.1% del total). Cartera vencida: $162.760.789.513 (100.0%). Cartera corriente: $0. Documentos: 60. Días mora máximo: 2945. Riesgo: alto. Vendedor asignado: RECAUDOS OF.CENTRAL.",
+    "tags": [
+      "cliente",
+      "67040225-0",
+      "bahamon gualdron gina andrea",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_72139503-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: ELMER ENRIQUE PACHECO POLO",
+    "contenido": "Cliente ELMER ENRIQUE PACHECO POLO (código 72139503-0, NIT: 72139503, ciudad: VALLEDUPAR): Saldo total $5.358.074.175 (14.0% del total). Cartera vencida: $5.014.659.935 (93.6%). Cartera corriente: $343.414.240. Documentos: 345. Días mora máximo: 2516. Riesgo: alto. Vendedor asignado: RECAUDOS OF.CENTRAL.",
+    "tags": [
+      "cliente",
+      "72139503-0",
+      "elmer enrique pacheco polo",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_6549981-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: ARISTIZABAL GRISALES HECTOR FABIO",
+    "contenido": "Cliente ARISTIZABAL GRISALES HECTOR FABIO (código 6549981-0, NIT: 6549981, ciudad: CALI): Saldo total $4.617.920.128 (12.0% del total). Cartera vencida: $4.617.920.128 (100.0%). Cartera corriente: $0. Documentos: 243. Días mora máximo: 1128. Riesgo: alto. Vendedor asignado: RECAUDOS OF.CENTRAL.",
+    "tags": [
+      "cliente",
+      "6549981-0",
+      "aristizabal grisales hector fabio",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_991520783001-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: Sin nombre",
+    "contenido": "Cliente Sin nombre (código 991520783001-0, NIT: N/D, ciudad: N/D): Saldo total $4.613.754.706 (12.0% del total). Cartera vencida: $4.613.754.706 (100.0%). Cartera corriente: $0. Documentos: 161. Días mora máximo: 3082. Riesgo: alto. Vendedor asignado: RECAUDOS OF.CENTRAL.",
+    "tags": [
+      "cliente",
+      "991520783001-0",
+      "sin nombre",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_88216979-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: WILSON RODOLFO JAIMES FLOREZ",
+    "contenido": "Cliente WILSON RODOLFO JAIMES FLOREZ (código 88216979-0, NIT: 88216979, ciudad: CUCUTA): Saldo total $3.895.788.100 (10.2% del total). Cartera vencida: $3.897.336.250 (100.0%). Cartera corriente: $-1.548.150. Documentos: 602. Días mora máximo: 3082. Riesgo: alto. Vendedor asignado: RECAUDOS OF.CENTRAL.",
+    "tags": [
+      "cliente",
+      "88216979-0",
+      "wilson rodolfo jaimes florez",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_87713814-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: HUBER ALEX BURBANO PANTOJA",
+    "contenido": "Cliente HUBER ALEX BURBANO PANTOJA (código 87713814-0, NIT: 87713814, ciudad: PASTO): Saldo total $2.925.884.109 (7.6% del total). Cartera vencida: $2.825.360.541 (96.6%). Cartera corriente: $100.523.567. Documentos: 438. Días mora máximo: 3018. Riesgo: alto. Vendedor asignado: COORDINADOR VENTAS SUR.",
+    "tags": [
+      "cliente",
+      "87713814-0",
+      "huber alex burbano pantoja",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_36183775-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: SANDRA LILIANA TRUJILLO MEDINA",
+    "contenido": "Cliente SANDRA LILIANA TRUJILLO MEDINA (código 36183775-0, NIT: 36183775, ciudad: NEIVA): Saldo total $2.587.288.862 (6.7% del total). Cartera vencida: $2.587.288.862 (100.0%). Cartera corriente: $0. Documentos: 508. Días mora máximo: 2953. Riesgo: alto. Vendedor asignado: NAPROLAB HUILA.",
+    "tags": [
+      "cliente",
+      "36183775-0",
+      "sandra liliana trujillo medina",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_900464794-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: INVERSIONES KAUTIVA SAS",
+    "contenido": "Cliente INVERSIONES KAUTIVA SAS (código 900464794-0, NIT: 900464794, ciudad: M6DELLIN): Saldo total $2.169.217.478 (5.7% del total). Cartera vencida: $2.124.730.392 (97.9%). Cartera corriente: $44.487.086. Documentos: 798. Días mora máximo: 3037. Riesgo: alto. Vendedor asignado: MEDELLIN CENTRO.",
+    "tags": [
+      "cliente",
+      "900464794-0",
+      "inversiones kautiva sas",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_900938624-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: C D DISTRIBUCIONES SAS",
+    "contenido": "Cliente C D DISTRIBUCIONES SAS (código 900938624-0, NIT: 900938624, ciudad: CALI): Saldo total $2.103.674.162 (5.5% del total). Cartera vencida: $2.103.674.162 (100.0%). Cartera corriente: $0. Documentos: 162. Días mora máximo: 2715. Riesgo: alto. Vendedor asignado: OFICINAS.",
+    "tags": [
+      "cliente",
+      "900938624-0",
+      "c d distribuciones sas",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_71653570-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: NESTOR ZULUAGA GOMEZ",
+    "contenido": "Cliente NESTOR ZULUAGA GOMEZ (código 71653570-0, NIT: 71653570, ciudad: CALI): Saldo total $1.674.409.438 (4.4% del total). Cartera vencida: $1.674.409.438 (100.0%). Cartera corriente: $0. Documentos: 479. Días mora máximo: 3028. Riesgo: alto. Vendedor asignado: RECAUDOS OF.CENTRAL.",
+    "tags": [
+      "cliente",
+      "71653570-0",
+      "nestor zuluaga gomez",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_900179959-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: DIMOBE SAS",
+    "contenido": "Cliente DIMOBE SAS (código 900179959-0, NIT: 900179959, ciudad: M6DELLIN): Saldo total $1.430.103.004 (3.7% del total). Cartera vencida: $1.409.688.953 (98.6%). Cartera corriente: $20.414.052. Documentos: 273. Días mora máximo: 1843. Riesgo: alto. Vendedor asignado: MAQUILAS NAPROLAB.",
+    "tags": [
+      "cliente",
+      "900179959-0",
+      "dimobe sas",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_41730954-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: BEATRIZ ELENA RAMIREZ SANCHEZ",
+    "contenido": "Cliente BEATRIZ ELENA RAMIREZ SANCHEZ (código 41730954-0, NIT: 41730954, ciudad: VILLAVICENCIO): Saldo total $1.385.896.880 (3.6% del total). Cartera vencida: $1.377.712.855 (99.4%). Cartera corriente: $8.184.025. Documentos: 293. Días mora máximo: 2998. Riesgo: alto. Vendedor asignado: COORDINADOR VENTAS CENTRO.",
+    "tags": [
+      "cliente",
+      "41730954-0",
+      "beatriz elena ramirez sanchez",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_890300279-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: Sin nombre",
+    "contenido": "Cliente Sin nombre (código 890300279-0, NIT: N/D, ciudad: N/D): Saldo total $1.178.775.000 (3.1% del total). Cartera vencida: $1.178.775.000 (100.0%). Cartera corriente: $0. Documentos: 1. Días mora máximo: 2415. Riesgo: alto. Vendedor asignado: NAPROLAB VALLE.",
+    "tags": [
+      "cliente",
+      "890300279-0",
+      "sin nombre",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_901293584-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: GLOBAL COSMETICA S.A.S",
+    "contenido": "Cliente GLOBAL COSMETICA S.A.S (código 901293584-0, NIT: 901293584, ciudad: VILLAVICENCIO): Saldo total $1.109.859.351 (2.9% del total). Cartera vencida: $1.018.568.652 (91.8%). Cartera corriente: $91.290.699. Documentos: 214. Días mora máximo: 1670. Riesgo: alto. Vendedor asignado: NAPROLAB META.",
+    "tags": [
+      "cliente",
+      "901293584-0",
+      "global cosmetica s.a.s",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_3101663819-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: Sin nombre",
+    "contenido": "Cliente Sin nombre (código 3101663819-0, NIT: N/D, ciudad: N/D): Saldo total $1.093.125.694 (2.8% del total). Cartera vencida: $1.093.125.694 (100.0%). Cartera corriente: $0. Documentos: 28. Días mora máximo: 3323. Riesgo: alto. Vendedor asignado: EXPORTACIONES.",
+    "tags": [
+      "cliente",
+      "3101663819-0",
+      "sin nombre",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_91284736-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: ECAR RAMIRO ARENIS ACEVEDO",
+    "contenido": "Cliente ECAR RAMIRO ARENIS ACEVEDO (código 91284736-0, NIT: 91284736, ciudad: BUCARAMANGA): Saldo total $1.086.554.893 (2.8% del total). Cartera vencida: $1.065.945.773 (98.1%). Cartera corriente: $20.609.121. Documentos: 812. Días mora máximo: 1742. Riesgo: alto. Vendedor asignado: RECAUDOS OF.CENTRAL.",
+    "tags": [
+      "cliente",
+      "91284736-0",
+      "ecar ramiro arenis acevedo",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_900651421-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: SURTIMOS COSMETICOS S.A.S",
+    "contenido": "Cliente SURTIMOS COSMETICOS S.A.S (código 900651421-0, NIT: 900651421, ciudad: M6DELLIN): Saldo total $1.040.132.997 (2.7% del total). Cartera vencida: $1.023.602.436 (98.4%). Cartera corriente: $16.530.561. Documentos: 376. Días mora máximo: 2936. Riesgo: alto. Vendedor asignado: MEDELLIN CENTRO.",
+    "tags": [
+      "cliente",
+      "900651421-0",
+      "surtimos cosmeticos s.a.s",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_800024702-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: Sin nombre",
+    "contenido": "Cliente Sin nombre (código 800024702-0, NIT: N/D, ciudad: N/D): Saldo total $1.006.013.838 (2.6% del total). Cartera vencida: $1.006.013.838 (100.0%). Cartera corriente: $0. Documentos: 1. Días mora máximo: 2969. Riesgo: alto. Vendedor asignado: OFICINAS.",
+    "tags": [
+      "cliente",
+      "800024702-0",
+      "sin nombre",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_902010904-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: PCN POCION S A S",
+    "contenido": "Cliente PCN POCION S A S (código 902010904-0, NIT: 902010904, ciudad: CALI): Saldo total $894.313.459 (2.3% del total). Cartera vencida: $894.313.459 (100.0%). Cartera corriente: $0. Documentos: 32. Días mora máximo: 79. Riesgo: bajo. Vendedor asignado: RECAUDOS OF.CENTRAL.",
+    "tags": [
+      "cliente",
+      "902010904-0",
+      "pcn pocion s a s",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  },
+  {
+    "id": "cliente_901875433-0",
+    "tipo": "cliente_detalle",
+    "titulo": "Detalle Cliente: COMERCIALIZADORA COSMOBELLEZA DEL HUILA SAS",
+    "contenido": "Cliente COMERCIALIZADORA COSMOBELLEZA DEL HUILA SAS (código 901875433-0, NIT: 901875433, ciudad: NEIVA): Saldo total $866.309.748 (2.3% del total). Cartera vencida: $708.587.769 (81.8%). Cartera corriente: $157.721.979. Documentos: 182. Días mora máximo: 544. Riesgo: alto. Vendedor asignado: COORDINADOR VENTAS SUR.",
+    "tags": [
+      "cliente",
+      "901875433-0",
+      "comercializadora cosmobelleza del huila sas",
+      "detalle"
+    ],
+    "updated_at": "2026-05-07T03:52:30.421Z"
+  }
+]

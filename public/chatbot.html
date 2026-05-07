@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chatbot Financiero - ADATEC</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <style>
     :root {
       --bg-primary: #0f172a;
@@ -18,6 +22,10 @@
       --accent-green: #10b981;
       --accent-red: #ef4444;
       --radius: 12px;
+    }
+    [data-theme="light"] {
+      --bg-primary: #f8fafc; --bg-secondary: #ffffff; --bg-card: #ffffff;
+      --border: #e2e8f0; --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -76,6 +84,40 @@
     .back-btn:hover {
       border-color: var(--accent-blue);
       color: var(--accent-blue);
+    }
+
+    .export-btn {
+      padding: 6px 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+    .export-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+    .export-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 5px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .warning-badge {
+      display: inline-block;
+      background: rgba(245,158,11,0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245,158,11,0.3);
+      border-radius: 6px;
+      padding: 4px 8px;
+      font-size: 11px;
+      margin-top: 6px;
     }
 
     .chat-messages {
@@ -229,7 +271,11 @@
       <h1>Asistente Financiero ADATEC</h1>
       <div class="header-info">
         <span id="userDisplay"></span>
-        <a href="index.html" class="back-btn">← Volver al Dashboard</a>
+        <button class="export-btn" id="exportPdf" title="Exportar como PDF">📋 PDF</button>
+        <button class="export-btn" id="exportDocx" title="Exportar como Word">📝 Word</button>
+        <button class="export-btn" id="exportPptx" title="Exportar como PowerPoint">📑 PPT</button>
+        <button class="theme-toggle" id="themeToggle">🌙 Oscuro</button>
+        <a href="index.html" class="back-btn">← Dashboard</a>
       </div>
     </div>
     <div class="chat-messages" id="chatMessages">
@@ -264,13 +310,59 @@
     const sendBtn = document.getElementById('sendBtn');
     const typingIndicator = document.getElementById('typingIndicator');
 
+    // ─── Theme ────────────────────────────────────
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      const btn = document.getElementById('themeToggle');
+      if (btn) btn.textContent = saved === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+    })();
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeToggle').textContent = next === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+    });
+
+    // ─── Export Handlers ─────────────────────────
+    async function exportConversation(format) {
+      if (!token || conversationHistory.length === 0) {
+        alert('No hay conversación para exportar'); return;
+      }
+      const btn = document.getElementById('export' + format.charAt(0).toUpperCase() + format.slice(1));
+      if (btn) { btn.disabled = true; btn.textContent = '⏳'; }
+      try {
+        const resp = await fetch('/api/reports/conversation', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-session-id': token },
+          body: JSON.stringify({ format, messages: conversationHistory }),
+        });
+        if (!resp.ok) {
+          const err = await resp.json().catch(() => ({ error: resp.statusText }));
+          throw new Error(err.error || resp.statusText);
+        }
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = `conversacion_${Date.now()}.${format}`; a.click();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert('Error exportando: ' + err.message);
+      } finally {
+        const labels = { pdf: '📋 PDF', docx: '📝 Word', pptx: '📑 PPT' };
+        if (btn) { btn.disabled = false; btn.textContent = labels[format] || format; }
+      }
+    }
+
+    document.getElementById('exportPdf').addEventListener('click',  () => exportConversation('pdf'));
+    document.getElementById('exportDocx').addEventListener('click', () => exportConversation('docx'));
+    document.getElementById('exportPptx').addEventListener('click', () => exportConversation('pptx'));
+
     async function verifyToken() {
       if (!token) return false;
-      
       try {
-        const resp = await fetch('/api/verify', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
+        const resp = await fetch('/api/verify', { headers: { 'x-session-id': token } });
         const data = await resp.json();
         return data.authenticated;
       } catch {
@@ -280,13 +372,8 @@
 
     async function init() {
       const authenticated = await verifyToken();
-      
-      if (!authenticated) {
-        window.location.href = 'index.html';
-        return;
-      }
-      
-      document.getElementById('userDisplay').textContent = 'Usuario: naprolab';
+      if (!authenticated) { window.location.href = 'index.html'; return; }
+      document.getElementById('userDisplay').textContent = 'naprolab';
       chatInput.focus();
     }
 
@@ -296,9 +383,27 @@
       msg.innerHTML = formatMessage(content);
       chatMessages.appendChild(msg);
       chatMessages.scrollTop = chatMessages.scrollHeight;
+      if (typeof renderMathInElement !== 'undefined') {
+        renderMathInElement(msg, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false}
+          ],
+          throwOnError: false
+        });
+      }
     }
 
     function formatMessage(text) {
+      if (typeof marked !== 'undefined') {
+        try {
+          return marked.parse(text);
+        } catch (e) {
+          console.error('Marked parse error:', e);
+        }
+      }
       return text
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br>')
@@ -321,7 +426,7 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'x-session-id': token
           },
           body: JSON.stringify({
             message,
@@ -334,6 +439,12 @@
         if (data.success) {
           addMessage(data.response, 'assistant');
           conversationHistory.push({ role: 'assistant', content: data.response });
+          if (data.warnings && data.warnings.length > 0) {
+            const wEl = document.createElement('div');
+            wEl.className = 'warning-badge';
+            wEl.textContent = '⚠️ ' + data.warnings[0];
+            chatMessages.lastElementChild.appendChild(wEl);
+          }
         } else {
           addMessage('Error: ' + (data.error || 'Respuesta inválida'), 'system');
         }

@@ -1,0 +1,1172 @@
+[
+  {
+    "mes": "2015-12",
+    "anio": 2015,
+    "mes_num": 12,
+    "docs": 28,
+    "saldo": 256425500,
+    "saldo_vencido": 256425500,
+    "clientes": 7,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2016-03",
+    "anio": 2016,
+    "mes_num": 3,
+    "docs": 18,
+    "saldo": 6564263,
+    "saldo_vencido": 6564263,
+    "clientes": 17,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2016-06",
+    "anio": 2016,
+    "mes_num": 6,
+    "docs": 1,
+    "saldo": 827206.96,
+    "saldo_vencido": 827206.96,
+    "clientes": 1,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2016-12",
+    "anio": 2016,
+    "mes_num": 12,
+    "docs": 6,
+    "saldo": 5314339.1899999995,
+    "saldo_vencido": 5314339.1899999995,
+    "clientes": 1,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-01",
+    "anio": 2017,
+    "mes_num": 1,
+    "docs": 1,
+    "saldo": 828827.33,
+    "saldo_vencido": 828827.33,
+    "clientes": 1,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-02",
+    "anio": 2017,
+    "mes_num": 2,
+    "docs": 3,
+    "saldo": 2835899,
+    "saldo_vencido": 2835899,
+    "clientes": 1,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-03",
+    "anio": 2017,
+    "mes_num": 3,
+    "docs": 9,
+    "saldo": 26799262.44,
+    "saldo_vencido": 26799262.44,
+    "clientes": 3,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-04",
+    "anio": 2017,
+    "mes_num": 4,
+    "docs": 3,
+    "saldo": 1555083,
+    "saldo_vencido": 1555083,
+    "clientes": 2,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-05",
+    "anio": 2017,
+    "mes_num": 5,
+    "docs": 5,
+    "saldo": 232081,
+    "saldo_vencido": 232081,
+    "clientes": 2,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-06",
+    "anio": 2017,
+    "mes_num": 6,
+    "docs": 2,
+    "saldo": 441565,
+    "saldo_vencido": 441565,
+    "clientes": 2,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-07",
+    "anio": 2017,
+    "mes_num": 7,
+    "docs": 10,
+    "saldo": 43082711.769999996,
+    "saldo_vencido": 43082711.769999996,
+    "clientes": 5,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-08",
+    "anio": 2017,
+    "mes_num": 8,
+    "docs": 6,
+    "saldo": 22593923.94,
+    "saldo_vencido": 22593923.94,
+    "clientes": 4,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-09",
+    "anio": 2017,
+    "mes_num": 9,
+    "docs": 13,
+    "saldo": 35067443.31,
+    "saldo_vencido": 35067443.31,
+    "clientes": 8,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-10",
+    "anio": 2017,
+    "mes_num": 10,
+    "docs": 19,
+    "saldo": 126616551.55999999,
+    "saldo_vencido": 126616551.55999999,
+    "clientes": 11,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-11",
+    "anio": 2017,
+    "mes_num": 11,
+    "docs": 67,
+    "saldo": 148972066.43,
+    "saldo_vencido": 148972066.43,
+    "clientes": 44,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2017-12",
+    "anio": 2017,
+    "mes_num": 12,
+    "docs": 132,
+    "saldo": 357989591.82,
+    "saldo_vencido": 357989591.82,
+    "clientes": 89,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-01",
+    "anio": 2018,
+    "mes_num": 1,
+    "docs": 62,
+    "saldo": 174153867.23,
+    "saldo_vencido": 174153867.23,
+    "clientes": 42,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-02",
+    "anio": 2018,
+    "mes_num": 2,
+    "docs": 144,
+    "saldo": 188807179.5,
+    "saldo_vencido": 188807179.5,
+    "clientes": 98,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-03",
+    "anio": 2018,
+    "mes_num": 3,
+    "docs": 164,
+    "saldo": 1363800475.54,
+    "saldo_vencido": 1363800475.54,
+    "clientes": 96,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-04",
+    "anio": 2018,
+    "mes_num": 4,
+    "docs": 202,
+    "saldo": 516871060.21,
+    "saldo_vencido": 516871060.21,
+    "clientes": 115,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-05",
+    "anio": 2018,
+    "mes_num": 5,
+    "docs": 390,
+    "saldo": 508555684.36999995,
+    "saldo_vencido": 508555684.36999995,
+    "clientes": 226,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-06",
+    "anio": 2018,
+    "mes_num": 6,
+    "docs": 279,
+    "saldo": 377622019.04,
+    "saldo_vencido": 377622019.04,
+    "clientes": 167,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-07",
+    "anio": 2018,
+    "mes_num": 7,
+    "docs": 412,
+    "saldo": 516736960.18,
+    "saldo_vencido": 516736960.18,
+    "clientes": 208,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-08",
+    "anio": 2018,
+    "mes_num": 8,
+    "docs": 301,
+    "saldo": 481785107.48999995,
+    "saldo_vencido": 481785107.48999995,
+    "clientes": 211,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-09",
+    "anio": 2018,
+    "mes_num": 9,
+    "docs": 288,
+    "saldo": 560643846.41,
+    "saldo_vencido": 560643846.41,
+    "clientes": 191,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-10",
+    "anio": 2018,
+    "mes_num": 10,
+    "docs": 324,
+    "saldo": 841638266.08,
+    "saldo_vencido": 841638266.08,
+    "clientes": 229,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-11",
+    "anio": 2018,
+    "mes_num": 11,
+    "docs": 362,
+    "saldo": 951212667.44,
+    "saldo_vencido": 951212667.44,
+    "clientes": 218,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2018-12",
+    "anio": 2018,
+    "mes_num": 12,
+    "docs": 229,
+    "saldo": 643224396.23,
+    "saldo_vencido": 643224396.23,
+    "clientes": 171,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-01",
+    "anio": 2019,
+    "mes_num": 1,
+    "docs": 123,
+    "saldo": 189368166.47999996,
+    "saldo_vencido": 189368166.47999996,
+    "clientes": 104,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-02",
+    "anio": 2019,
+    "mes_num": 2,
+    "docs": 275,
+    "saldo": 480689737.71000004,
+    "saldo_vencido": 480689737.71000004,
+    "clientes": 193,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-03",
+    "anio": 2019,
+    "mes_num": 3,
+    "docs": 285,
+    "saldo": 533817342.81,
+    "saldo_vencido": 533817342.81,
+    "clientes": 206,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-04",
+    "anio": 2019,
+    "mes_num": 4,
+    "docs": 301,
+    "saldo": 513634244.57000005,
+    "saldo_vencido": 513634244.57000005,
+    "clientes": 223,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-05",
+    "anio": 2019,
+    "mes_num": 5,
+    "docs": 246,
+    "saldo": 475236802.86,
+    "saldo_vencido": 475236802.86,
+    "clientes": 173,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-06",
+    "anio": 2019,
+    "mes_num": 6,
+    "docs": 276,
+    "saldo": 491691478.55,
+    "saldo_vencido": 491691478.55,
+    "clientes": 208,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-07",
+    "anio": 2019,
+    "mes_num": 7,
+    "docs": 372,
+    "saldo": 595987351.99,
+    "saldo_vencido": 595987351.99,
+    "clientes": 274,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-08",
+    "anio": 2019,
+    "mes_num": 8,
+    "docs": 298,
+    "saldo": 482388291.22,
+    "saldo_vencido": 482388291.22,
+    "clientes": 216,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-09",
+    "anio": 2019,
+    "mes_num": 9,
+    "docs": 343,
+    "saldo": 1774107924.6299996,
+    "saldo_vencido": 1774107924.6299996,
+    "clientes": 245,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-10",
+    "anio": 2019,
+    "mes_num": 10,
+    "docs": 493,
+    "saldo": 596222806.65,
+    "saldo_vencido": 596222806.65,
+    "clientes": 251,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-11",
+    "anio": 2019,
+    "mes_num": 11,
+    "docs": 325,
+    "saldo": 840782142.6299999,
+    "saldo_vencido": 840782142.6299999,
+    "clientes": 242,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2019-12",
+    "anio": 2019,
+    "mes_num": 12,
+    "docs": 347,
+    "saldo": 749078693.270001,
+    "saldo_vencido": 749078693.270001,
+    "clientes": 270,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-01",
+    "anio": 2020,
+    "mes_num": 1,
+    "docs": 237,
+    "saldo": 428817647.1800001,
+    "saldo_vencido": 428817647.1800001,
+    "clientes": 182,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-02",
+    "anio": 2020,
+    "mes_num": 2,
+    "docs": 315,
+    "saldo": 504375003.7700002,
+    "saldo_vencido": 504375003.7700002,
+    "clientes": 235,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-03",
+    "anio": 2020,
+    "mes_num": 3,
+    "docs": 211,
+    "saldo": 222947260.4,
+    "saldo_vencido": 222947260.4,
+    "clientes": 167,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-04",
+    "anio": 2020,
+    "mes_num": 4,
+    "docs": 52,
+    "saldo": 31535826.80999999,
+    "saldo_vencido": 31535826.80999999,
+    "clientes": 48,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-05",
+    "anio": 2020,
+    "mes_num": 5,
+    "docs": 360,
+    "saldo": 345427111.6899999,
+    "saldo_vencido": 345427111.6899999,
+    "clientes": 219,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-06",
+    "anio": 2020,
+    "mes_num": 6,
+    "docs": 386,
+    "saldo": 400567198.7900002,
+    "saldo_vencido": 400567198.7900002,
+    "clientes": 249,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-07",
+    "anio": 2020,
+    "mes_num": 7,
+    "docs": 413,
+    "saldo": 610225005.2900001,
+    "saldo_vencido": 610225005.2900001,
+    "clientes": 248,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-08",
+    "anio": 2020,
+    "mes_num": 8,
+    "docs": 450,
+    "saldo": 607244451.2799999,
+    "saldo_vencido": 607244451.2799999,
+    "clientes": 309,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-09",
+    "anio": 2020,
+    "mes_num": 9,
+    "docs": 352,
+    "saldo": 592310050.1299998,
+    "saldo_vencido": 592310050.1299998,
+    "clientes": 232,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-10",
+    "anio": 2020,
+    "mes_num": 10,
+    "docs": 337,
+    "saldo": 638886318.0000004,
+    "saldo_vencido": 638886318.0000004,
+    "clientes": 241,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-11",
+    "anio": 2020,
+    "mes_num": 11,
+    "docs": 475,
+    "saldo": 1174143842.9299994,
+    "saldo_vencido": 1174143842.9299994,
+    "clientes": 286,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2020-12",
+    "anio": 2020,
+    "mes_num": 12,
+    "docs": 353,
+    "saldo": 739503382.5100001,
+    "saldo_vencido": 739503382.5100001,
+    "clientes": 268,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-01",
+    "anio": 2021,
+    "mes_num": 1,
+    "docs": 205,
+    "saldo": 282837619.79999995,
+    "saldo_vencido": 282837619.79999995,
+    "clientes": 157,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-02",
+    "anio": 2021,
+    "mes_num": 2,
+    "docs": 318,
+    "saldo": 532249718.93999994,
+    "saldo_vencido": 532249718.93999994,
+    "clientes": 233,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-03",
+    "anio": 2021,
+    "mes_num": 3,
+    "docs": 436,
+    "saldo": 546224809.6799998,
+    "saldo_vencido": 546224809.6799998,
+    "clientes": 277,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-04",
+    "anio": 2021,
+    "mes_num": 4,
+    "docs": 324,
+    "saldo": 547054616.2499998,
+    "saldo_vencido": 547054616.2499998,
+    "clientes": 206,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-05",
+    "anio": 2021,
+    "mes_num": 5,
+    "docs": 320,
+    "saldo": 480869883.05999994,
+    "saldo_vencido": 480869883.05999994,
+    "clientes": 167,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-06",
+    "anio": 2021,
+    "mes_num": 6,
+    "docs": 866,
+    "saldo": 1897277316.1000018,
+    "saldo_vencido": 1897277316.1000018,
+    "clientes": 306,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-07",
+    "anio": 2021,
+    "mes_num": 7,
+    "docs": 414,
+    "saldo": 622532404.9099997,
+    "saldo_vencido": 622532404.9099997,
+    "clientes": 269,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-08",
+    "anio": 2021,
+    "mes_num": 8,
+    "docs": 583,
+    "saldo": 1825511226.0300014,
+    "saldo_vencido": 1825511226.0300014,
+    "clientes": 300,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-09",
+    "anio": 2021,
+    "mes_num": 9,
+    "docs": 1064,
+    "saldo": 1617090911.4400072,
+    "saldo_vencido": 1617090911.4400072,
+    "clientes": 342,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-10",
+    "anio": 2021,
+    "mes_num": 10,
+    "docs": 731,
+    "saldo": 1115526843.7199984,
+    "saldo_vencido": 1115526843.7199984,
+    "clientes": 254,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-11",
+    "anio": 2021,
+    "mes_num": 11,
+    "docs": 1171,
+    "saldo": 2834710641.4600053,
+    "saldo_vencido": 2834710641.4600053,
+    "clientes": 364,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2021-12",
+    "anio": 2021,
+    "mes_num": 12,
+    "docs": 947,
+    "saldo": 164529997296.0201,
+    "saldo_vencido": 164529997296.0201,
+    "clientes": 299,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-01",
+    "anio": 2022,
+    "mes_num": 1,
+    "docs": 461,
+    "saldo": 689480830.5299994,
+    "saldo_vencido": 689480830.5299994,
+    "clientes": 194,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-02",
+    "anio": 2022,
+    "mes_num": 2,
+    "docs": 791,
+    "saldo": 1188675040.1900008,
+    "saldo_vencido": 1188675040.1900008,
+    "clientes": 294,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-03",
+    "anio": 2022,
+    "mes_num": 3,
+    "docs": 944,
+    "saldo": 1587637965.3000016,
+    "saldo_vencido": 1587637965.3000016,
+    "clientes": 337,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-04",
+    "anio": 2022,
+    "mes_num": 4,
+    "docs": 672,
+    "saldo": 1079332085.3599985,
+    "saldo_vencido": 1079332085.3599985,
+    "clientes": 277,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-05",
+    "anio": 2022,
+    "mes_num": 5,
+    "docs": 906,
+    "saldo": 1310850234.049998,
+    "saldo_vencido": 1310850234.049998,
+    "clientes": 351,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-06",
+    "anio": 2022,
+    "mes_num": 6,
+    "docs": 774,
+    "saldo": 1494787861.7999988,
+    "saldo_vencido": 1494787861.7999988,
+    "clientes": 290,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-07",
+    "anio": 2022,
+    "mes_num": 7,
+    "docs": 937,
+    "saldo": 973314731.1999991,
+    "saldo_vencido": 973314731.1999991,
+    "clientes": 356,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-08",
+    "anio": 2022,
+    "mes_num": 8,
+    "docs": 937,
+    "saldo": 1579651175.1200018,
+    "saldo_vencido": 1579651175.1200018,
+    "clientes": 340,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-09",
+    "anio": 2022,
+    "mes_num": 9,
+    "docs": 938,
+    "saldo": 2142024705.4399972,
+    "saldo_vencido": 2142024705.4399972,
+    "clientes": 363,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-10",
+    "anio": 2022,
+    "mes_num": 10,
+    "docs": 893,
+    "saldo": 1023406572.8499985,
+    "saldo_vencido": 1023406572.8499985,
+    "clientes": 348,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-11",
+    "anio": 2022,
+    "mes_num": 11,
+    "docs": 1156,
+    "saldo": 1904852494.1399968,
+    "saldo_vencido": 1904852494.1399968,
+    "clientes": 404,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2022-12",
+    "anio": 2022,
+    "mes_num": 12,
+    "docs": 1077,
+    "saldo": 1927266012.3599977,
+    "saldo_vencido": 1927266012.3599977,
+    "clientes": 378,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-01",
+    "anio": 2023,
+    "mes_num": 1,
+    "docs": 1029,
+    "saldo": 2198833848.040001,
+    "saldo_vencido": 2198833848.040001,
+    "clientes": 378,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-02",
+    "anio": 2023,
+    "mes_num": 2,
+    "docs": 1599,
+    "saldo": 1249575684.2600029,
+    "saldo_vencido": 1249575684.2600029,
+    "clientes": 401,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-03",
+    "anio": 2023,
+    "mes_num": 3,
+    "docs": 1380,
+    "saldo": 1556329062.3900015,
+    "saldo_vencido": 1556329062.3900015,
+    "clientes": 383,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-04",
+    "anio": 2023,
+    "mes_num": 4,
+    "docs": 1650,
+    "saldo": 1693039591.5999992,
+    "saldo_vencido": 1693039591.5999992,
+    "clientes": 421,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-05",
+    "anio": 2023,
+    "mes_num": 5,
+    "docs": 1678,
+    "saldo": 1665464870.560004,
+    "saldo_vencido": 1665464870.560004,
+    "clientes": 443,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-06",
+    "anio": 2023,
+    "mes_num": 6,
+    "docs": 1546,
+    "saldo": 1949291991.489999,
+    "saldo_vencido": 1949291991.489999,
+    "clientes": 422,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-07",
+    "anio": 2023,
+    "mes_num": 7,
+    "docs": 1880,
+    "saldo": 1692152496.3200028,
+    "saldo_vencido": 1692152496.3200028,
+    "clientes": 497,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-08",
+    "anio": 2023,
+    "mes_num": 8,
+    "docs": 1811,
+    "saldo": 2504192054.119996,
+    "saldo_vencido": 2504192054.119996,
+    "clientes": 452,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-09",
+    "anio": 2023,
+    "mes_num": 9,
+    "docs": 1854,
+    "saldo": 1639939739.8200016,
+    "saldo_vencido": 1639939739.8200016,
+    "clientes": 513,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-10",
+    "anio": 2023,
+    "mes_num": 10,
+    "docs": 1686,
+    "saldo": 476969871.5599995,
+    "saldo_vencido": 476969871.5599995,
+    "clientes": 447,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-11",
+    "anio": 2023,
+    "mes_num": 11,
+    "docs": 2213,
+    "saldo": 2626183006.3299932,
+    "saldo_vencido": 2626183006.3299932,
+    "clientes": 521,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2023-12",
+    "anio": 2023,
+    "mes_num": 12,
+    "docs": 1943,
+    "saldo": 2341759449.5899944,
+    "saldo_vencido": 2341759449.5899944,
+    "clientes": 460,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-01",
+    "anio": 2024,
+    "mes_num": 1,
+    "docs": 1568,
+    "saldo": 1354950984.5300014,
+    "saldo_vencido": 1354950984.5300014,
+    "clientes": 466,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-02",
+    "anio": 2024,
+    "mes_num": 2,
+    "docs": 1551,
+    "saldo": 1111356285.1600006,
+    "saldo_vencido": 1111356285.1600006,
+    "clientes": 448,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-03",
+    "anio": 2024,
+    "mes_num": 3,
+    "docs": 1029,
+    "saldo": 989090488.3899992,
+    "saldo_vencido": 989090488.3899992,
+    "clientes": 336,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-04",
+    "anio": 2024,
+    "mes_num": 4,
+    "docs": 1511,
+    "saldo": 2114231984.6800048,
+    "saldo_vencido": 2114231984.6800048,
+    "clientes": 443,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-05",
+    "anio": 2024,
+    "mes_num": 5,
+    "docs": 1210,
+    "saldo": 1525950533.2199965,
+    "saldo_vencido": 1525950533.2199965,
+    "clientes": 391,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-06",
+    "anio": 2024,
+    "mes_num": 6,
+    "docs": 1170,
+    "saldo": -243323220790.5098,
+    "saldo_vencido": -243323220790.5098,
+    "clientes": 380,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-07",
+    "anio": 2024,
+    "mes_num": 7,
+    "docs": 1495,
+    "saldo": 1230602420.3899992,
+    "saldo_vencido": 1230602420.3899992,
+    "clientes": 450,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-08",
+    "anio": 2024,
+    "mes_num": 8,
+    "docs": 1391,
+    "saldo": 2150414206.0799994,
+    "saldo_vencido": 2150414206.0799994,
+    "clientes": 428,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-09",
+    "anio": 2024,
+    "mes_num": 9,
+    "docs": 1858,
+    "saldo": 1949656098.6000018,
+    "saldo_vencido": 1949656098.6000018,
+    "clientes": 437,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-10",
+    "anio": 2024,
+    "mes_num": 10,
+    "docs": 1339,
+    "saldo": 1130795380.3199992,
+    "saldo_vencido": 1130795380.3199992,
+    "clientes": 386,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-11",
+    "anio": 2024,
+    "mes_num": 11,
+    "docs": 1597,
+    "saldo": 1726744462.2700002,
+    "saldo_vencido": 1726744462.2700002,
+    "clientes": 402,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2024-12",
+    "anio": 2024,
+    "mes_num": 12,
+    "docs": 2322,
+    "saldo": 1715610846.8800013,
+    "saldo_vencido": 1715610846.8800013,
+    "clientes": 457,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-01",
+    "anio": 2025,
+    "mes_num": 1,
+    "docs": 1743,
+    "saldo": 946366605.3000009,
+    "saldo_vencido": 946366605.3000009,
+    "clientes": 396,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-02",
+    "anio": 2025,
+    "mes_num": 2,
+    "docs": 1354,
+    "saldo": 1204526164.0299993,
+    "saldo_vencido": 1204526164.0299993,
+    "clientes": 385,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-03",
+    "anio": 2025,
+    "mes_num": 3,
+    "docs": 1477,
+    "saldo": 1522064322.3299966,
+    "saldo_vencido": 1522064322.3299966,
+    "clientes": 380,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-04",
+    "anio": 2025,
+    "mes_num": 4,
+    "docs": 1316,
+    "saldo": 1256697206.550001,
+    "saldo_vencido": 1256697206.550001,
+    "clientes": 346,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-05",
+    "anio": 2025,
+    "mes_num": 5,
+    "docs": 1554,
+    "saldo": 1673553110.5299985,
+    "saldo_vencido": 1673553110.5299985,
+    "clientes": 418,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-06",
+    "anio": 2025,
+    "mes_num": 6,
+    "docs": 1389,
+    "saldo": 906715279.6299995,
+    "saldo_vencido": 906715279.6299995,
+    "clientes": 317,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-07",
+    "anio": 2025,
+    "mes_num": 7,
+    "docs": 1398,
+    "saldo": 1705094651.0700028,
+    "saldo_vencido": 1705094651.0700028,
+    "clientes": 378,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-08",
+    "anio": 2025,
+    "mes_num": 8,
+    "docs": 1185,
+    "saldo": 2043503097.9699996,
+    "saldo_vencido": 2043503097.9699996,
+    "clientes": 306,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-09",
+    "anio": 2025,
+    "mes_num": 9,
+    "docs": 1382,
+    "saldo": 1274495945.270005,
+    "saldo_vencido": 1274495945.270005,
+    "clientes": 323,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-10",
+    "anio": 2025,
+    "mes_num": 10,
+    "docs": 1259,
+    "saldo": 2091765050.4000032,
+    "saldo_vencido": 2091765050.4000032,
+    "clientes": 345,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-11",
+    "anio": 2025,
+    "mes_num": 11,
+    "docs": 1360,
+    "saldo": 2311936352.85,
+    "saldo_vencido": 2311936352.85,
+    "clientes": 383,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2025-12",
+    "anio": 2025,
+    "mes_num": 12,
+    "docs": 1599,
+    "saldo": 2135279578.8700025,
+    "saldo_vencido": 2135279578.8700025,
+    "clientes": 378,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2026-01",
+    "anio": 2026,
+    "mes_num": 1,
+    "docs": 1086,
+    "saldo": 2373552430.3199973,
+    "saldo_vencido": 2373552430.3199973,
+    "clientes": 329,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2026-02",
+    "anio": 2026,
+    "mes_num": 2,
+    "docs": 1106,
+    "saldo": 1112608333.8300018,
+    "saldo_vencido": 1112608333.8300018,
+    "clientes": 319,
+    "saldo_corriente": 0
+  },
+  {
+    "mes": "2026-03",
+    "anio": 2026,
+    "mes_num": 3,
+    "docs": 1195,
+    "saldo": 2170081643.7300024,
+    "saldo_vencido": 1266551091.1799986,
+    "clientes": 312,
+    "saldo_corriente": 903530552.5500038
+  },
+  {
+    "mes": "2026-04",
+    "anio": 2026,
+    "mes_num": 4,
+    "docs": 1246,
+    "saldo": 2374629323.009994,
+    "saldo_vencido": 481278182.3699995,
+    "clientes": 332,
+    "saldo_corriente": 1893351140.6399946
+  },
+  {
+    "mes": "2026-05",
+    "anio": 2026,
+    "mes_num": 5,
+    "docs": 135,
+    "saldo": 88030572.18999997,
+    "saldo_vencido": 5726114.829999999,
+    "clientes": 52,
+    "saldo_corriente": 82304457.35999997
+  }
+]

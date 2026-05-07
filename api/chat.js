@@ -27,7 +27,7 @@ function buildSystemPrompt() {
   if (!ragData) {
     return 'Eres un asistente financiero especializado en análisis de cartera.';
   }
-  
+
   const overview = ragData.general_overview;
   const metrics = ragData.key_metrics;
   const risks = ragData.risk_indicators;
@@ -35,51 +35,39 @@ function buildSystemPrompt() {
   const clients = ragData.client_analysis;
   const vendors = ragData.vendor_analysis;
   const aging = ragData.aging_analysis;
-  const efficiency = ragData.efficiency_analysis;
   const periodic = ragData.periodic_summaries;
-  
-  return `Eres un asistente financiero experto especializado en análisis de cartera para ADATEC.
 
-DATOS ACTUALIZADOS DE LA CARTERA:
+  return `Eres un asistente financiero experto de ADATEC. Responde EXCLUSIVAMENTE con los datos siguientes.
 
-RESUMEN GENERAL:
-${overview.key_facts.map(f => '- ' + f).join('\n')}
+RESUMEN:
+${overview.key_facts.slice(0, 4).map(f => '- ' + f).join('\n')}
 
-MÉTRICAS CLAVE:
-- Saldo total: ${metrics.metrics.saldo_total.formatted}
-- Cartera vencida: ${metrics.metrics.cartera_vencida.formatted} (${metrics.metrics.pct_vencida.formatted})
-- Cartera corriente: ${metrics.metrics.cartera_corriente.formatted}
-- Días mora promedio: ${metrics.metrics.dias_mora_promedio.formatted}
-- Total documentos: ${metrics.metrics.total_documentos.formatted}
-- Total clientes: ${metrics.metrics.total_clientes.formatted}
+MÉTRICAS:
+- Total: ${metrics.metrics.saldo_total.formatted} | Vencida: ${metrics.metrics.cartera_vencida.formatted} (${metrics.metrics.pct_vencida.formatted}) | Corriente: ${metrics.metrics.cartera_corriente.formatted}
+- Mora: ${metrics.metrics.dias_mora_promedio.formatted} | Docs: ${metrics.metrics.total_documentos.formatted} | Clientes: ${metrics.metrics.total_clientes.formatted}
 
-ANÁLISIS DE ANTIGÜEDAD:
+AGING:
 ${aging.rangos.map(r => `- ${r.rango}: ${fmt(r.saldo)} (${r.pct_del_total})`).join('\n')}
 
-TOP 5 CLIENTES DEUDORES:
-${clients.top_10_deudores.slice(0, 5).map(c => `- ${c.nombre}: ${fmt(c.saldo)} (${c.pct_del_total}% del total)`).join('\n')}
+TOP 3 DEUDORES:
+${clients.top_10_deudores.slice(0, 3).map(c => `- ${c.nombre}: ${fmt(c.saldo)} (${c.pct_del_total}%)`).join('\n')}
 
-TOP 5 VENDEDORES CON MAYOR CARTERA:
-${vendors.top_10_vendedores.slice(0, 5).map(v => `- ${v.nombre}: ${fmt(v.saldo_total)} (${v.pct_vencido}% vencido)`).join('\n')}
+TOP 3 VENDEDORES:
+${vendors.top_10_vendedores.slice(0, 3).map(v => `- ${v.nombre}: ${fmt(v.saldo_total)} (${v.pct_vencido}% vencido)`).join('\n')}
 
-EFICIENCIA DE RECAUDO POR AÑO:
-${periodic.slice(0, 5).map(p => `- ${p.year}: Fact ${fmt(p.facturacion_total)}, Rec ${fmt(p.recaudo_total)}, Eficiencia ${p.eficiencia}%`).join('\n')}
+EFICIENCIA (últimos 3 años):
+${periodic.slice(0, 3).map(p => `- ${p.year}: Fact ${fmt(p.facturacion_total)}, Rec ${fmt(p.recaudo_total)}, Ef ${p.eficiencia}%`).join('\n')}
 
-TENDENCIAS RECIENTES:
-- Facturación promedio mensual: ${trends.facturacion_promedio_mensual.formatted}
-- Recaudo promedio mensual: ${trends.recaudo_promedio_mensual.formatted}
-- Brecha promedio: ${trends.brecha_promedio.formatted}
+TENDENCIAS:
+- Fact avg/mes: ${trends.facturacion_promedio_mensual.formatted} | Rec avg/mes: ${trends.recaudo_promedio_mensual.formatted} | Brecha: ${trends.brecha_promedio.formatted}
 
-INDICADORES DE RIESGO:
-${risks.riesgos.map(r => `- [${r.nivel}] ${r.indicador}: ${r.valor}`).join('\n')}
+RIESGOS:
+${risks.riesgos.slice(0, 3).map(r => `- [${r.nivel}] ${r.indicador}: ${r.valor}`).join('\n')}
 
-INSTRUCCIONES:
-1. Usa SIEMPRE los datos proporcionados para responder
-2. Si no tienes datos específicos, indícalo claramente
-3. Proporciona análisis contextualizado, no solo números
-4. Usa formato claro y profesional
-5. Responde en español
-6. Si te preguntan por algo fuera del alcance de los datos, indícalo`;
+REGLAS:
+1. Responde SOLO con los datos arriba.
+2. Sé conciso y profesional.
+3. Idioma: español.`;
 }
 
 module.exports = async (req, res) => {
@@ -128,7 +116,7 @@ module.exports = async (req, res) => {
       body: JSON.stringify({
         model: MODEL,
         messages,
-        max_tokens: 2000,
+        max_tokens: 1200,
         temperature: 0.3,
         top_p: 0.9
       })

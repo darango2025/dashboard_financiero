@@ -1,0 +1,153 @@
+{
+  "version": "2.0",
+  "generado_en": "2026-05-07T03:52:30.425Z",
+  "fuente": "data/cartera_export.xlsx",
+  "total_registros_raw": 89064,
+  "columnas_fuente": [
+    "Empresa",
+    "Cód. Cliente",
+    "Nombre Cliente",
+    "NIT",
+    "Dirección Cliente",
+    "Ciudad",
+    "Teléfono",
+    "Email",
+    "Cód. Vendedor",
+    "Vendedor",
+    "Cód. Cobrador",
+    "Tipo Documento",
+    "Nro Documento",
+    "Numero",
+    "Cuenta Contable",
+    "Fecha Documento",
+    "Fecha Vencimiento",
+    "Días Mora",
+    "Saldo",
+    "Saldo Base",
+    "Valor Impuestos",
+    "Base Retención",
+    "Estado",
+    "Proceso",
+    "Observaciones",
+    "Fecha Creación",
+    "Fecha Modificación"
+  ],
+  "columnas_disponibles": [
+    "empresa",
+    "cod_cliente",
+    "nombre_cliente",
+    "nit",
+    "ciudad",
+    "email",
+    "cod_vendedor",
+    "vendedor",
+    "tipo_documento",
+    "nro_documento",
+    "fecha_documento",
+    "fecha_vencimiento",
+    "dias_mora",
+    "saldo",
+    "saldo_base",
+    "valor_impuestos",
+    "base_retencion",
+    "estado",
+    "proceso"
+  ],
+  "columnas_derivadas": [
+    "anio",
+    "mes",
+    "mes_key",
+    "trimestre",
+    "aging_bucket"
+  ],
+  "columnas_no_disponibles": [
+    {
+      "columna": "recaudo",
+      "razon": "No existe en el Excel exportado"
+    },
+    {
+      "columna": "facturacion",
+      "razon": "Saldo en cartera != facturación nueva"
+    },
+    {
+      "columna": "costo",
+      "razon": "No incluido en exportación de cartera"
+    }
+  ],
+  "advertencias": [
+    {
+      "tipo": "datos_faltantes",
+      "campo": "nombre_cliente",
+      "count": 399,
+      "mensaje": "399 registros sin nombre de cliente"
+    },
+    {
+      "tipo": "normalizacion_tipo_doc",
+      "tipos_atipicos": [
+        "F020",
+        "F025",
+        "J06",
+        "F011",
+        "J.",
+        "F20",
+        "J005",
+        "F021",
+        "R030",
+        "F16",
+        "F005",
+        "F05",
+        "R013",
+        "F022",
+        "F023",
+        "F013",
+        "F012",
+        "F11",
+        "F.",
+        "F003",
+        "F004",
+        "F014",
+        "F007",
+        "F5"
+      ],
+      "mensaje": "Tipos de documento con posibles variantes sucias detectados"
+    }
+  ],
+  "aging_buckets": [
+    {
+      "key": "corriente",
+      "label": "Corriente (sin mora)"
+    },
+    {
+      "key": "1_30",
+      "label": "1 - 30 días"
+    },
+    {
+      "key": "31_60",
+      "label": "31 - 60 días"
+    },
+    {
+      "key": "61_90",
+      "label": "61 - 90 días"
+    },
+    {
+      "key": "91_180",
+      "label": "91 - 180 días"
+    },
+    {
+      "key": "181_360",
+      "label": "181 - 360 días"
+    },
+    {
+      "key": "mas_360",
+      "label": "Más de 360 días"
+    }
+  ],
+  "estados": {
+    "N": "pendiente",
+    "Y": "cerrado"
+  },
+  "proceso": {
+    "Y": "en_proceso",
+    "U": "sin_proceso"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "generado_en": "2026-05-07T03:52:30.406Z",
+  "fecha_referencia": "2026-05-07",
+  "total_registros": 89064,
+  "saldo_total": 38374163157.343956,
+  "cartera_vencida": 35494977006.79369,
+  "cartera_corriente": 2879186150.5499935,
+  "pct_vencida": 92.49707117066018,
+  "dias_mora_promedio": 1037.7636641567117,
+  "total_clientes": 2854,
+  "total_vendedores": 94,
+  "fecha_min_documento": "2015-12-30",
+  "fecha_max_documento": "2026-05-05",
+  "concentracion_top10": 502.1785097447273
+}

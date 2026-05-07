@@ -14,6 +14,19 @@
       --accent-red: #ef4444; --accent-purple: #8b5cf6; --accent-orange: #f97316;
       --shadow: 0 4px 6px -1px rgba(0,0,0,0.3), 0 2px 4px -2px rgba(0,0,0,0.2); --radius: 12px;
     }
+    [data-theme="light"] {
+      --bg-primary: #f8fafc; --bg-secondary: #ffffff; --bg-card: #ffffff; --bg-card-hover: #f1f5f9;
+      --border: #e2e8f0; --text-primary: #0f172a; --text-secondary: #475569; --text-muted: #94a3b8;
+      --shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+    }
+    .theme-toggle { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
+    .theme-toggle:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+    /* Reports toolbar */
+    .reports-bar { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; background: var(--bg-secondary); padding: 10px 16px; border-radius: var(--radius); border: 1px solid var(--border); }
+    .reports-bar span { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-right: 4px; }
+    .report-btn { padding: 6px 14px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-secondary); border-radius: 6px; font-size: 12px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+    .report-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+    .report-btn.loading { opacity: 0.6; cursor: not-allowed; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.5; min-height: 100vh; }
     .header { background: var(--bg-secondary); border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(10px); }
@@ -118,7 +131,8 @@
       <span id="genDate"></span>
       <span class="badge">ADATEC</span>
       <span style="color: var(--text-muted); font-size: 12px;">NPROSERVER</span>
-      <a href="chatbot.html" style="color: var(--accent-cyan); text-decoration: none; font-size: 13px; padding: 6px 12px; border: 1px solid var(--accent-cyan); border-radius: 6px;">Chatbot</a>
+      <a href="chatbot.html" style="color: var(--accent-cyan); text-decoration: none; font-size: 13px; padding: 6px 12px; border: 1px solid var(--accent-cyan); border-radius: 6px;">💬 Chatbot</a>
+      <button class="theme-toggle" id="themeToggle" title="Cambiar tema">🌙 Oscuro</button>
       <span id="userDisplay" style="display:none;"></span>
       <button class="logout-btn" id="logoutBtn" style="display:none;">Cerrar Sesión</button>
     </div>
@@ -141,6 +155,14 @@
       <button class="filter-btn" id="applyFilter">Aplicar</button>
       <button class="filter-btn reset" id="resetFilter">Reset</button>
       <span class="filter-active-indicator" id="filterIndicator">Filtro activo</span>
+    </div>
+
+    <div class="reports-bar" id="reportsBar" style="display:none;">
+      <span>📄 Exportar:</span>
+      <button class="report-btn" data-format="docx" title="Informe Word">📝 Word</button>
+      <button class="report-btn" data-format="xlsx" title="Informe Excel">📊 Excel</button>
+      <button class="report-btn" data-format="pptx" title="Presentación PowerPoint">📑 PowerPoint</button>
+      <button class="report-btn" data-format="pdf" title="Informe PDF">📋 PDF</button>
     </div>
 
     <div class="tabs">
@@ -199,6 +221,61 @@
     const renderedTabs = new Set();
     let authToken = localStorage.getItem('authToken');
 
+    // ─── Theme ────────────────────────────────────
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      const btn = document.getElementById('themeToggle');
+      if (btn) btn.textContent = saved === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+    })();
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('themeToggle').textContent = next === 'dark' ? '☀️ Claro' : '🌙 Oscuro';
+    });
+
+    // ─── Report Downloads ─────────────────────────
+    document.querySelectorAll('.report-btn[data-format]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!authToken) { alert('Debes iniciar sesión'); return; }
+        const format = btn.dataset.format;
+        btn.classList.add('loading');
+        btn.textContent = '⏳ Generando…';
+        try {
+          const resp = await fetch('/api/reports/financial', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-session-id': authToken },
+            body: JSON.stringify({ format, filters: getActiveFilters() }),
+          });
+          if (!resp.ok) {
+            const err = await resp.json().catch(() => ({ error: 'Error desconocido' }));
+            throw new Error(err.error || resp.statusText);
+          }
+          const blob = await resp.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `informe_cartera_${Date.now()}.${format}`;
+          a.click();
+          URL.revokeObjectURL(url);
+        } catch (err) {
+          alert('Error al generar reporte: ' + err.message);
+        } finally {
+          const labels = { docx: '📝 Word', xlsx: '📊 Excel', pptx: '📑 PowerPoint', pdf: '📋 PDF' };
+          btn.classList.remove('loading');
+          btn.textContent = labels[format] || format;
+        }
+      });
+    });
+
+    function getActiveFilters() {
+      const desde = document.getElementById('filterDesde')?.value;
+      const hasta = document.getElementById('filterHasta')?.value;
+      return desde && hasta ? { desde, hasta } : {};
+    }
+
     function fmt(n) { if (n === null || n === undefined) return '-'; const abs = Math.abs(n); if (abs >= 1e9) return (n / 1e9).toFixed(2) + 'B'; if (abs >= 1e6) return (n / 1e6).toFixed(2) + 'M'; if (abs >= 1e3) return (n / 1e3).toFixed(1) + 'K'; return n.toLocaleString('es-CO'); }
     function fmtFull(n) { if (n === null || n === undefined) return '-'; return '$' + Number(n).toLocaleString('es-CO', { maximumFractionDigits: 0 }); }
     function fmtPct(n) { return Number(n).toFixed(1) + '%'; }
@@ -256,7 +333,7 @@
       const data = getActiveData(); const k = data.kpis; const aging = data.aging;
       const vencida = k.cartera_vencida; const total = k.saldo_total;
       const pctV = (vencida / total * 100).toFixed(1);
-      const top1 = data.top_clientes[0]; const top1Pct = (top1.saldo / total * 100).toFixed(1);
+      const top1 = data.top_clientes[0]; const top1Pct = (top1.saldo / data.kpis.saldo_base_total * 100).toFixed(1);
       const top3V = data.cartera_vendedor.slice(0, 3);
       const top3Saldo = top3V.reduce((s, v) => s + v.saldo_total, 0);
       const top3Pct = (top3Saldo / total * 100).toFixed(1);
@@ -269,7 +346,7 @@
       const effR = avgF > 0 ? (avgR / avgF * 100).toFixed(1) : 'N/A';
       const insights = [
         { title: 'Cartera altamente vencida', cls: 'critical', text: 'El <span class="insight-metric">' + pctV + '%</span> de la cartera esta vencida (' + fmtFull(vencida) + '). Solo el <span class="insight-metric">' + (100 - pctV).toFixed(1) + '%</span> esta corriente.' },
-        { title: 'Concentracion extrema en un cliente', cls: 'critical', text: 'El cliente <span class="insight-metric">' + top1.nombre + '</span> representa el <span class="insight-metric">' + top1Pct + '%</span> de toda la cartera con ' + fmtFull(top1.saldo) + '.' },
+        { title: 'Concentracion extrema en un cliente', cls: 'critical', text: 'El cliente <span class="insight-metric">' + top1.nombre + '</span> representa el <span class="insight-metric">' + top1Pct + '%</span> del saldo base original con ' + fmtFull(top1.saldo) + '.' },
         { title: 'Mora prolongada critica', cls: 'warning', text: 'El <span class="insight-metric">' + mas90Pct + '%</span> de la cartera tiene mas de 90 dias de vencida (' + fmtFull(mas90 ? mas90.saldo : 0) + ').' },
         { title: 'Top 3 vendedores concentran cartera', cls: 'warning', text: '<span class="insight-metric">' + top3V.map(v => v.nombre).join(', ') + '</span> concentran el <span class="insight-metric">' + top3Pct + '%</span> del saldo total.' },
         { title: 'Eficiencia de recaudo', cls: 'info', text: 'La eficiencia de recaudo del periodo seleccionado fue del <span class="insight-metric">' + effR + '%</span>.' },
@@ -318,7 +395,7 @@
 
     function renderRecaudo() { const data = getActiveData(); const recaudo = data.recaudos_mensual || []; loadChart('recaudoChart', { type: 'bar', data: { labels: recaudo.map(r => r.mes), datasets: [{ label: 'Recaudado', data: recaudo.map(r => r.recaudado), backgroundColor: recaudo.map((r, i) => { const prev = i > 0 ? recaudo[i - 1].recaudado : 0; return r.recaudado >= prev ? '#10b981' : '#ef4444'; }), borderRadius: 4, borderSkipped: false }] }, options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, legend: { display: false }, tooltip: { callbacks: { label: (ctx) => fmtFull(ctx.raw) } } }, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, ticks: { ...chartDefaults.scales.y.ticks, callback: (v) => fmt(v) } } } } }); }
 
-    function renderPareto() { const data = getActiveData(); const conc = (data.concentracion || []).filter(c => c.rn % 5 === 0 || c.rn <= 10); const container = document.getElementById('paretoContainer'); container.innerHTML = conc.map(c => { const color = c.pct_saldo > 80 ? '#ef4444' : c.pct_saldo > 60 ? '#f59e0b' : '#3b82f6'; return '<div class="pareto-bar"><div class="pareto-label">' + c.pct_clientes.toFixed(1) + '% clientes</div><div class="pareto-track"><div class="pareto-fill" style="width: ' + c.pct_saldo + '%; background: ' + color + ';">' + c.pct_saldo.toFixed(1) + '%</div></div><div class="pareto-value">del saldo</div></div>'; }).join(''); }
+    function renderPareto() { const data = getActiveData(); const conc = (data.concentracion || []).filter(c => { const n = parseInt(c.num_clientes, 10); return n <= 10 || n % 5 === 0; }); const container = document.getElementById('paretoContainer'); container.innerHTML = conc.map(c => { const color = c.pct_saldo > 80 ? '#ef4444' : c.pct_saldo > 60 ? '#f59e0b' : '#3b82f6'; const width = Math.min(c.pct_saldo, 100); return '<div class="pareto-bar"><div class="pareto-label">' + c.pct_clientes.toFixed(1) + '% clientes (' + c.num_clientes + ')</div><div class="pareto-track"><div class="pareto-fill" style="width: ' + width + '%; background: ' + color + ';">' + c.pct_saldo.toFixed(1) + '%</div></div><div class="pareto-value">del saldo</div></div>'; }).join(''); }
 
     function renderAnalisisInsights() {
       const data = getActiveData();
@@ -331,7 +408,7 @@
       const gapPct = avgF > 0 ? (gap / avgF * 100).toFixed(1) : 0;
       const factTrend = fact.length >= 6 ? ((fact[fact.length - 1].facturado - fact[fact.length - 6].facturado) / (fact[fact.length - 6].facturado || 1) * 100).toFixed(1) : 0;
       const top20Saldo = data.top_clientes.slice(0, 20).reduce((s, c) => s + c.saldo, 0);
-      const top20Pct = (top20Saldo / data.kpis.saldo_total * 100).toFixed(1);
+      const top20Pct = (top20Saldo / data.kpis.saldo_base_total * 100).toFixed(1);
       const insights = [
         { title: 'Brecha facturacion-recaudo', cls: 'warning', text: 'En los ultimos 6 meses, la facturacion promedio fue <span class="insight-metric">' + fmtFull(avgF) + '/mes</span> y el recaudo promedio <span class="insight-metric">' + fmtFull(avgR) + '/mes</span>. La brecha es del <span class="insight-metric">' + gapPct + '%</span>.' },
         { title: 'Tendencia de facturacion', cls: factTrend > 0 ? 'success' : 'critical', text: 'La facturacion del ultimo mes vs 6 meses atras tiene una variacion del <span class="insight-metric">' + factTrend + '%</span>.' },
@@ -348,7 +425,7 @@
       const recaudo = data.recaudos_mensual || [];
       const factMap = {}; fact.forEach(f => factMap[f.mes] = f.facturado);
       const recaudoMap = {}; recaudo.forEach(r => recaudoMap[r.mes] = r.recaudado);
-      const allMonths = new Set([...Object.keys(factMap), ...Object.keys(recaudoMap)]).sort();
+      const allMonths = [...new Set([...Object.keys(factMap), ...Object.keys(recaudoMap)])].sort();
       const points = allMonths.map(m => ({ x: factMap[m] || 0, y: recaudoMap[m] || 0, month: m })).filter(p => p.x > 0 || p.y > 0);
       loadChart('correlacionChart', { type: 'scatter', data: { datasets: [{ label: 'Meses', data: points, backgroundColor: '#3b82f6', pointRadius: 6, pointHoverRadius: 8 }] }, options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, legend: { display: false }, tooltip: { callbacks: { label: (ctx) => { const d = ctx.raw; return 'Fact: ' + fmtFull(d.x) + ', Rec: ' + fmtFull(d.y) + ', Mes: ' + (d.month ? d.month.substring(0, 7) : ''); } } } }, scales: { x: { ...chartDefaults.scales.x, title: { display: true, text: 'Facturacion', color: '#94a3b8' }, ticks: { ...chartDefaults.scales.x.ticks, callback: (v) => fmt(v) } }, y: { ...chartDefaults.scales.y, title: { display: true, text: 'Recaudo', color: '#94a3b8' }, ticks: { ...chartDefaults.scales.y.ticks, callback: (v) => fmt(v) } } } } });
     }
@@ -376,9 +453,9 @@
       (renders[tab] || []).forEach(fn => fn());
     }
 
-    async function verifyAuth() { if (!authToken) return false; try { const resp = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + authToken } }); const data = await resp.json(); return data.authenticated; } catch { return false; } }
-    function showDashboard() { document.getElementById('loginOverlay').classList.add('hidden'); document.getElementById('userDisplay').style.display = 'inline'; document.getElementById('userDisplay').textContent = 'naprolab'; document.getElementById('logoutBtn').style.display = 'inline'; }
-    function showLogin() { document.getElementById('loginOverlay').classList.remove('hidden'); document.getElementById('userDisplay').style.display = 'none'; document.getElementById('logoutBtn').style.display = 'none'; authToken = null; localStorage.removeItem('authToken'); }
+    async function verifyAuth() { if (!authToken) return false; try { const resp = await fetch('/api/verify', { headers: { 'x-session-id': authToken } }); const data = await resp.json(); return data.authenticated; } catch { return false; } }
+    function showDashboard() { document.getElementById('loginOverlay').classList.add('hidden'); document.getElementById('userDisplay').style.display = 'inline'; document.getElementById('userDisplay').textContent = 'naprolab'; document.getElementById('logoutBtn').style.display = 'inline'; document.getElementById('reportsBar').style.display = 'flex'; }
+    function showLogin() { document.getElementById('loginOverlay').classList.remove('hidden'); document.getElementById('userDisplay').style.display = 'none'; document.getElementById('logoutBtn').style.display = 'none'; document.getElementById('reportsBar').style.display = 'none'; authToken = null; localStorage.removeItem('authToken'); }
 
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -390,7 +467,7 @@
       try {
         const resp = await fetch('/api/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
         const data = await resp.json();
-        if (data.success) { authToken = data.token; localStorage.setItem('authToken', authToken); showDashboard(); }
+        if (data.success) { authToken = data.sessionId; localStorage.setItem('authToken', authToken); showDashboard(); }
         else { document.getElementById('errorMsg').style.display = 'block'; }
       } catch { document.getElementById('errorMsg').textContent = 'Error de conexion'; document.getElementById('errorMsg').style.display = 'block'; }
       finally { loginBtn.disabled = false; }
