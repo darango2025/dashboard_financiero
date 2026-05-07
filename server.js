@@ -37,55 +37,42 @@ const app  = express();
 const PORT = process.env.PORT || 3001;
 
 // ─── Configuración ────────────────────────────
-const SESSION_SECRET = process.env.SESSION_SECRET;
-if (!SESSION_SECRET || SESSION_SECRET === 'default_secret') {
-  console.warn('[Security] ⚠️  SESSION_SECRET débil. Usa una clave fuerte en .env');
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.SESSION_SECRET || 'naprolab_financial_dashboard_secret_2026';
+if (!process.env.SESSION_SECRET) {
+  console.warn('[Security] ⚠️  SESSION_SECRET no definido en .env. Usando clave por defecto.');
 }
 
 // Credenciales de usuario desde .env
 const VALID_USER     = process.env.DASHBOARD_USER     || 'naprolab';
 const VALID_PASSWORD = process.env.DASHBOARD_PASSWORD || 'naprolab';
-const SESSION_TTL_MS = parseInt(process.env.SESSION_TTL_MS || '28800000', 10); // 8 horas
+const JWT_TTL        = '8h';
 
 // ─── Middlewares ──────────────────────────────
 app.use(cors({
   origin: process.env.ALLOWED_ORIGIN || '*',
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'x-session-id'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id'],
 }));
 app.use(express.json({ limit: '1mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ─── Sesiones en memoria ─────────────────────
-const sessions = new Map();
-
-function generateSessionId() {
-  return crypto.randomBytes(32).toString('hex');
+// ─── JWT Auth ─────────────────────────────────
+function getTokenFromReq(req) {
+  const auth = req.headers.authorization;
+  if (auth && auth.startsWith('Bearer ')) return auth.slice(7);
+  return req.headers['x-session-id'] || null; // backward compat
 }
-
-function cleanExpiredSessions() {
-  const now = Date.now();
-  for (const [id, sess] of sessions.entries()) {
-    if (now - new Date(sess.lastActivity).getTime() > SESSION_TTL_MS) {
-      sessions.delete(id);
-    }
-  }
-}
-setInterval(cleanExpiredSessions, 30 * 60 * 1000);
 
 function requireSession(req, res, next) {
-  const sessionId = req.headers['x-session-id'];
-  if (!sessionId || !sessions.has(sessionId)) {
-    return res.status(401).json({ error: 'Sesión no válida o expirada' });
+  const token = getTokenFromReq(req);
+  if (!token) return res.status(401).json({ error: 'No autenticado' });
+  try {
+    req.user = jwt.verify(token, JWT_SECRET);
+    next();
+  } catch {
+    return res.status(401).json({ error: 'Sesión expirada o inválida' });
   }
-  const sess = sessions.get(sessionId);
-  if (Date.now() - new Date(sess.lastActivity).getTime() > SESSION_TTL_MS) {
-    sessions.delete(sessionId);
-    return res.status(401).json({ error: 'Sesión expirada' });
-  }
-  sess.lastActivity = new Date().toISOString();
-  req.session = sess;
-  next();
 }
 
 // ─── Carga inicial de artefactos RAG ─────────
@@ -108,36 +95,27 @@ app.post('/api/login', (req, res) => {
   }
 
   if (userOk && passOk) {
-    const sessionId = generateSessionId();
-    sessions.set(sessionId, {
-      username: username.trim(),
-      createdAt: new Date().toISOString(),
-      lastActivity: new Date().toISOString(),
-    });
-    return res.json({ success: true, sessionId, message: 'Login exitoso' });
+    const token = jwt.sign({ username: username.trim() }, JWT_SECRET, { expiresIn: JWT_TTL });
+    return res.json({ success: true, token, sessionId: token, message: 'Login exitoso' });
   }
 
   return res.status(401).json({ success: false, message: 'Credenciales inválidas' });
 });
 
 app.post('/api/logout', (req, res) => {
-  const { sessionId } = req.body || {};
-  if (sessionId) sessions.delete(sessionId);
+  // JWT is stateless — client simply discards the token
   res.json({ success: true });
 });
 
 app.get('/api/verify', (req, res) => {
-  const sessionId = req.headers['x-session-id'];
-  if (!sessionId || !sessions.has(sessionId)) {
-    return res.status(401).json({ authenticated: false });
+  const token = getTokenFromReq(req);
+  if (!token) return res.status(401).json({ authenticated: false });
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    res.json({ authenticated: true, username: decoded.username });
+  } catch {
+    res.status(401).json({ authenticated: false });
   }
-  const sess = sessions.get(sessionId);
-  if (Date.now() - new Date(sess.lastActivity).getTime() > SESSION_TTL_MS) {
-    sessions.delete(sessionId);
-    return res.status(401).json({ authenticated: false });
-  }
-  sess.lastActivity = new Date().toISOString();
-  res.json({ authenticated: true, username: sess.username });
 });
 
 // ─── RUTA: Health ─────────────────────────────
@@ -148,7 +126,7 @@ app.get('/api/health', (req, res) => {
     ai_available: aiAvailable(),
     model: getModel(),
     processed_data: hasProcessed,
-    active_sessions: sessions.size,
+    auth_mode: 'jwt',
     timestamp: new Date().toISOString(),
   });
 });
