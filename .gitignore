@@ -6,3 +6,4 @@ data/*.xlsx
 data/*.xls
 .DS_Store
 Thumbs.db
+public/data/rag_summaries.json

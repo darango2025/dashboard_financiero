@@ -5,12 +5,17 @@
   "scripts": {
     "extract": "node scripts/extract_dashboard_data.js",
     "export-excel": "node scripts/export_cartera.js",
+    "generate-rag": "node scripts/generate_rag_summaries.js",
     "serve": "npx http-server public -p 3000 -c-1 --cors",
-    "dev": "npm run extract && npm run serve"
+    "dev": "npm run extract && npm run generate-rag && npm run serve"
   },
   "dependencies": {
     "http-server": "^14.1.1",
     "mssql": "^12.5.2",
-    "xlsx": "^0.18.5"
+    "xlsx": "^0.18.5",
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "openai": "^4.20.0"
   }
 }
