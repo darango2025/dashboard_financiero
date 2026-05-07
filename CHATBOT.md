@@ -8,7 +8,7 @@ Sistema de chatbot con RAG (Retrieval-Augmented Generation) para análisis finan
 
 - **Autenticación**: Sistema de login para proteger el acceso al chatbot
 - **RAG Strategy**: Resúmenes pre-computados por períodos para respuestas precisas
-- **DeepSeek AI**: Integración con modelo deepseek-v4-pro
+- **DeepSeek AI**: Integración con modelo deepseek-v4-flash
 - **Análisis Financiero**: Acceso completo a datos de cartera, clientes, recaudos y tendencias
 
 ## Estructura del Proyecto
@@ -75,7 +75,7 @@ Crear archivo `.env` con:
 
 ```env
 API_KEY_DS=sk-4410d2d7292046b282b4048843871223
-DEEPSEEK_MODEL=deepseek-v4-pro
+DEEPSEEK_MODEL=deepseek-v4-flash
 SESSION_SECRET=naprolab_financial_dashboard_secret_2026
 ```
 

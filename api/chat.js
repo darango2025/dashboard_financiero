@@ -3,7 +3,7 @@ const path = require('path');
 const { verifyToken } = require('./auth');
 
 const API_KEY = process.env.API_KEY_DS;
-const MODEL = process.env.DEEPSEEK_MODEL || 'deepseek-v4-pro';
+const MODEL = process.env.DEEPSEEK_MODEL || 'deepseek-v4-flash';
 
 let ragData = null;
 
