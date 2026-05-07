@@ -12,7 +12,7 @@
       "vencida",
       "corriente"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.520Z"
   },
   {
     "id": "aging_analysis",
@@ -25,7 +25,7 @@
       "mora",
       "distribucion"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.520Z"
   },
   {
     "id": "top_clientes",
@@ -38,7 +38,7 @@
       "top",
       "concentracion"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.520Z"
   },
   {
     "id": "vendedores_analysis",
@@ -50,7 +50,7 @@
       "cartera",
       "distribucion"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.520Z"
   },
   {
     "id": "tendencia_mensual",
@@ -63,7 +63,7 @@
       "evolucion",
       "periodo"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "risk_indicators",
@@ -76,7 +76,7 @@
       "concentracion",
       "deterioro"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "tipo_documento",
@@ -88,7 +88,7 @@
       "distribucion",
       "facturas"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "data_limitations",
@@ -100,7 +100,7 @@
       "datos_faltantes",
       "metodologia"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_67040225-0",
@@ -113,7 +113,7 @@
       "bahamon gualdron gina andrea",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_72139503-0",
@@ -126,7 +126,7 @@
       "elmer enrique pacheco polo",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_6549981-0",
@@ -139,7 +139,7 @@
       "aristizabal grisales hector fabio",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_991520783001-0",
@@ -152,7 +152,7 @@
       "sin nombre",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_88216979-0",
@@ -165,7 +165,7 @@
       "wilson rodolfo jaimes florez",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_87713814-0",
@@ -178,7 +178,7 @@
       "huber alex burbano pantoja",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_36183775-0",
@@ -191,7 +191,7 @@
       "sandra liliana trujillo medina",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_900464794-0",
@@ -204,7 +204,7 @@
       "inversiones kautiva sas",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_900938624-0",
@@ -217,7 +217,7 @@
       "c d distribuciones sas",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_71653570-0",
@@ -230,7 +230,7 @@
       "nestor zuluaga gomez",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_900179959-0",
@@ -243,7 +243,7 @@
       "dimobe sas",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_41730954-0",
@@ -256,7 +256,7 @@
       "beatriz elena ramirez sanchez",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_890300279-0",
@@ -269,7 +269,7 @@
       "sin nombre",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_901293584-0",
@@ -282,7 +282,7 @@
       "global cosmetica s.a.s",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_3101663819-0",
@@ -295,7 +295,7 @@
       "sin nombre",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_91284736-0",
@@ -308,7 +308,7 @@
       "ecar ramiro arenis acevedo",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_900651421-0",
@@ -321,7 +321,7 @@
       "surtimos cosmeticos s.a.s",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_800024702-0",
@@ -334,7 +334,7 @@
       "sin nombre",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_902010904-0",
@@ -347,7 +347,7 @@
       "pcn pocion s a s",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   },
   {
     "id": "cliente_901875433-0",
@@ -360,6 +360,6 @@
       "comercializadora cosmobelleza del huila sas",
       "detalle"
     ],
-    "updated_at": "2026-05-07T03:52:30.421Z"
+    "updated_at": "2026-05-07T04:44:05.521Z"
   }
 ]

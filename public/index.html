@@ -283,7 +283,16 @@
     const chartDefaults = { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8', font: { size: 12 }, padding: 16 } } }, scales: { x: { ticks: { color: '#64748b', font: { size: 11 } }, grid: { color: '#33415530' } }, y: { ticks: { color: '#64748b', font: { size: 11 } }, grid: { color: '#33415550' } } } };
     function getActiveData() { return CURRENT_DATA || ALL_DATA; }
 
-    function applyFilter(desdeStr, hastaStr) {
+    // Mapea número de meses a clave de período pre-calculado
+    function periodKeyFromMonths(months) {
+      if (!months || months === 0) return 'todo';
+      if (months <= 1) return '1m';
+      if (months <= 3) return '3m';
+      if (months <= 6) return '6m';
+      return '1y';
+    }
+
+    function applyFilter(desdeStr, hastaStr, periodMonths) {
       if (!ALL_DATA) return;
       if (!desdeStr || !hastaStr) {
         CURRENT_DATA = null;
@@ -293,9 +302,22 @@
         const hasta = new Date(hastaStr + '-01');
         hasta.setMonth(hasta.getMonth() + 1);
         CURRENT_DATA = JSON.parse(JSON.stringify(ALL_DATA));
+        // Filtrar series de tiempo
         CURRENT_DATA.facturacion_mensual = ALL_DATA.facturacion_mensual.filter(f => { const d = new Date(f.mes); return d >= desde && d < hasta; });
         CURRENT_DATA.recaudos_mensual = ALL_DATA.recaudos_mensual.filter(r => { const d = new Date(r.mes); return d >= desde && d < hasta; });
         CURRENT_DATA.pedidos_mensual = ALL_DATA.pedidos_mensual.filter(p => { const d = new Date(p.mes); return d >= desde && d < hasta; });
+        // Aplicar snapshot de período para Resumen General (kpis, aging, clientes, vendedores)
+        // Solo cuando se usa un botón de período preset (periodMonths != null)
+        if (periodMonths != null) {
+          const pKey = periodKeyFromMonths(periodMonths);
+          const snap = (ALL_DATA.periodos && ALL_DATA.periodos[pKey]) ? ALL_DATA.periodos[pKey] : null;
+          if (snap) {
+            CURRENT_DATA.kpis = { ...snap.kpis };
+            CURRENT_DATA.aging = snap.aging;
+            CURRENT_DATA.top_clientes = snap.top_clientes;
+            CURRENT_DATA.cartera_vendedor = snap.cartera_vendedor;
+          }
+        }
         document.getElementById('filterIndicator').classList.add('visible');
       }
       renderedTabs.clear();
@@ -543,14 +565,14 @@
         const months = parseInt(btn.dataset.months);
         const desdeEl = document.getElementById('filterDesde');
         const hastaEl = document.getElementById('filterHasta');
-        if (months === 0) { desdeEl.value = ''; hastaEl.value = ''; applyFilter(null, null); return; }
+        if (months === 0) { desdeEl.value = ''; hastaEl.value = ''; applyFilter(null, null, 0); return; }
         const now = new Date();
         const desde = new Date(now.getFullYear(), now.getMonth() - months + 1, 1);
         const desdeStr = desde.getFullYear() + '-' + String(desde.getMonth() + 1).padStart(2, '0');
         const hastaStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
         desdeEl.value = desdeStr;
         hastaEl.value = hastaStr;
-        applyFilter(desdeStr, hastaStr);
+        applyFilter(desdeStr, hastaStr, months);
       });
     });
 
@@ -559,7 +581,7 @@
       const hasta = document.getElementById('filterHasta').value || null;
       document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
       if (!desde && !hasta) { document.querySelector('[data-months="0"]').classList.add('active'); }
-      applyFilter(desde, hasta);
+      applyFilter(desde, hasta, null); // custom range → use closest snapshot key computed inside
     });
 
     document.getElementById('resetFilter').addEventListener('click', () => {

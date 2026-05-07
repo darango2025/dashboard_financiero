@@ -639,10 +639,111 @@ function saveArtifacts(artifacts) {
 }
 
 // ─────────────────────────────────────────────
+// SNAPSHOT PERIÓDICO (para filtros de Resumen General)
+// ─────────────────────────────────────────────
+/**
+ * Construye un mini-snapshot de kpis/aging/clientes/vendedores
+ * filtrando records a los últimos `months` meses.
+ * months=0 → todos los registros.
+ */
+function buildPeriodSnapshot(records, months, saldoBaseTotalAll) {
+  let recs = records;
+  if (months > 0) {
+    const mesKeys = [...new Set(records.map(r => r.mes_key).filter(Boolean))].sort();
+    const refMes = mesKeys[mesKeys.length - 1]; // ej. '2026-05'
+    if (refMes) {
+      const [yRef, mRef] = refMes.split('-').map(Number);
+      const cutDate = new Date(yRef, mRef - months, 1); // months atrás
+      recs = records.filter(r => {
+        if (!r.mes_key) return false;
+        const [y, m] = r.mes_key.split('-').map(Number);
+        return new Date(y, m - 1, 1) >= cutDate;
+      });
+    }
+  }
+  if (recs.length === 0) return null;
+
+  const totalSaldo = recs.reduce((s, r) => s + r.saldo, 0);
+  const vencida    = recs.filter(r => r.dias_mora > 0).reduce((s, r) => s + r.saldo, 0);
+  const corriente  = totalSaldo - vencida;
+
+  // Aging
+  const agingMap = {};
+  AGING_BUCKETS.forEach(b => { agingMap[b.key] = { rango: b.label, key: b.key, documentos: 0, saldo: 0 }; });
+  recs.forEach(r => {
+    const b = r.aging_bucket;
+    if (agingMap[b]) { agingMap[b].documentos++; agingMap[b].saldo += r.saldo; }
+  });
+  const aging = Object.values(agingMap).map(b => ({
+    ...b, pct_del_total: totalSaldo > 0 ? (b.saldo / totalSaldo * 100) : 0,
+  }));
+
+  // Top clientes
+  const cMap = {};
+  recs.forEach(r => {
+    if (!cMap[r.cod_cliente]) cMap[r.cod_cliente] = {
+      codigo: r.cod_cliente, nombre: r.nombre_cliente, nit: r.nit || '',
+      ciudad: r.ciudad || '', documentos: 0, saldo: 0, saldo_vencido: 0,
+      saldo_base: 0,
+    };
+    const c = cMap[r.cod_cliente];
+    c.documentos++; c.saldo += r.saldo;
+    if (r.dias_mora > 0) c.saldo_vencido += r.saldo;
+    c.saldo_base += r.saldo_base || r.saldo;
+  });
+  const topClientes = Object.values(cMap)
+    .sort((a, b) => b.saldo - a.saldo)
+    .slice(0, 20)
+    .map(c => ({ ...c,
+      pct_vencido: c.saldo > 0 ? (c.saldo_vencido / c.saldo * 100) : 0,
+      pct_del_total: (saldoBaseTotalAll || totalSaldo) > 0 ? (c.saldo / (saldoBaseTotalAll || totalSaldo) * 100) : 0,
+    }));
+
+  // Top vendedores
+  const vMap = {};
+  recs.forEach(r => {
+    if (!vMap[r.cod_vendedor]) vMap[r.cod_vendedor] = {
+      codigo: r.cod_vendedor, nombre: r.vendedor,
+      documentos: 0, saldo_total: 0, saldo_vencido: 0, saldo_corriente: 0,
+    };
+    const v = vMap[r.cod_vendedor];
+    v.documentos++; v.saldo_total += r.saldo;
+    if (r.dias_mora > 0) v.saldo_vencido += r.saldo;
+    else v.saldo_corriente += r.saldo;
+  });
+  const carteraVendedor = Object.values(vMap)
+    .sort((a, b) => b.saldo_total - a.saldo_total)
+    .slice(0, 20)
+    .map(v => ({ ...v, dias_mora_promedio: 0 }));
+
+  return {
+    kpis: {
+      total_documentos: recs.length,
+      saldo_total: totalSaldo,
+      cartera_vencida: vencida,
+      cartera_por_vencer: corriente,
+      pct_vencida: totalSaldo > 0 ? (vencida / totalSaldo * 100) : 0,
+      total_clientes: Object.keys(cMap).length,
+      total_vendedores: Object.keys(vMap).length,
+      saldo_base_total: saldoBaseTotalAll || recs.reduce((s, r) => s + r.saldo_base, 0),
+      base_retencion_total: recs.reduce((s, r) => s + r.base_retencion, 0),
+      dias_mora_promedio: (() => {
+        const v = recs.filter(r => r.dias_mora > 0).map(r => r.dias_mora);
+        return v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0;
+      })(),
+    },
+    aging,
+    top_clientes: topClientes,
+    cartera_vendedor: carteraVendedor,
+  };
+}
+
+// ─────────────────────────────────────────────
 // DASHBOARD DATA (retrocompatible)
 // ─────────────────────────────────────────────
 function buildDashboardData(records, indexes) {
   const { kpiSnapshot, aging, clienteIndex, vendedorIndex, periodIndex, tipoDocIndex } = indexes;
+  const saldoBaseTotalAll = records.reduce((s, r) => s + r.saldo_base, 0);
   return {
     generado_en: new Date().toISOString(),
     kpis: {
@@ -654,7 +755,7 @@ function buildDashboardData(records, indexes) {
       dias_mora_promedio: kpiSnapshot.dias_mora_promedio,
       total_clientes: kpiSnapshot.total_clientes,
       total_vendedores: kpiSnapshot.total_vendedores,
-      saldo_base_total: records.reduce((s, r) => s + r.saldo_base, 0),
+      saldo_base_total: saldoBaseTotalAll,
       base_retencion_total: records.reduce((s, r) => s + r.base_retencion, 0),
     },
     aging: aging.map(b => ({
@@ -700,6 +801,14 @@ function buildDashboardData(records, indexes) {
     // Recaudos: no disponibles en este Excel
     recaudos_mensual: [],
     pedidos_mensual: [],
+    // Snapshots por período para filtros de Resumen General
+    periodos: {
+      todo: buildPeriodSnapshot(records, 0, saldoBaseTotalAll),
+      '1y':  buildPeriodSnapshot(records, 12, saldoBaseTotalAll),
+      '6m':  buildPeriodSnapshot(records, 6, saldoBaseTotalAll),
+      '3m':  buildPeriodSnapshot(records, 3, saldoBaseTotalAll),
+      '1m':  buildPeriodSnapshot(records, 1, saldoBaseTotalAll),
+    },
     generated_from: 'data/cartera_export.xlsx',
   };
 }
