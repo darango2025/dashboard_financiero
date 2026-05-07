@@ -29,90 +29,7 @@
       min-height: 100vh;
     }
 
-    .login-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-    }
-
-    .login-box {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
-    }
-
-    .login-box h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
-      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .login-box p {
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-      font-size: 14px;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
-    }
-
-    .form-group input {
-      width: 100%;
-      padding: 12px;
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text-primary);
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-group input:focus {
-      border-color: var(--accent-blue);
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background: var(--accent-blue);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity 0.2s;
-    }
-
-    .btn:hover { opacity: 0.9; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .error-msg {
-      color: var(--accent-red);
-      font-size: 13px;
-      margin-top: 12px;
-      display: none;
-    }
-
     .chat-container {
-      display: none;
       height: 100vh;
       flex-direction: column;
     }
@@ -144,7 +61,7 @@
       color: var(--text-muted);
     }
 
-    .logout-btn {
+    .back-btn {
       padding: 6px 16px;
       background: transparent;
       border: 1px solid var(--border);
@@ -153,11 +70,12 @@
       cursor: pointer;
       font-size: 13px;
       transition: all 0.2s;
+      text-decoration: none;
     }
 
-    .logout-btn:hover {
-      border-color: var(--accent-red);
-      color: var(--accent-red);
+    .back-btn:hover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
     }
 
     .chat-messages {
@@ -201,19 +119,6 @@
       color: var(--text-muted);
       font-size: 12px;
       text-align: center;
-    }
-
-    .message pre {
-      background: var(--bg-primary);
-      padding: 12px;
-      border-radius: 8px;
-      overflow-x: auto;
-      margin-top: 8px;
-      font-size: 13px;
-    }
-
-    .message code {
-      font-family: 'Consolas', monospace;
     }
 
     .typing-indicator {
@@ -319,31 +224,12 @@
   </style>
 </head>
 <body>
-  <div class="login-container" id="loginContainer">
-    <div class="login-box">
-      <h1>Chatbot Financiero</h1>
-      <p>Accede al asistente de análisis de cartera ADATEC</p>
-      <form id="loginForm">
-        <div class="form-group">
-          <label>Usuario</label>
-          <input type="text" id="username" required autocomplete="username">
-        </div>
-        <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" id="password" required autocomplete="current-password">
-        </div>
-        <button type="submit" class="btn" id="loginBtn">Iniciar Sesión</button>
-        <div class="error-msg" id="errorMsg">Credenciales inválidas</div>
-      </form>
-    </div>
-  </div>
-
-  <div class="chat-container" id="chatContainer">
+  <div class="chat-container">
     <div class="chat-header">
       <h1>Asistente Financiero ADATEC</h1>
       <div class="header-info">
         <span id="userDisplay"></span>
-        <button class="logout-btn" id="logoutBtn">Cerrar Sesión</button>
+        <a href="index.html" class="back-btn">← Volver al Dashboard</a>
       </div>
     </div>
     <div class="chat-messages" id="chatMessages">
@@ -370,26 +256,20 @@
   </div>
 
   <script>
-    const API_BASE = '';
-    
-    let sessionId = localStorage.getItem('sessionId');
+    let token = localStorage.getItem('authToken');
     let conversationHistory = [];
 
-    const loginContainer = document.getElementById('loginContainer');
-    const chatContainer = document.getElementById('chatContainer');
-    const loginForm = document.getElementById('loginForm');
-    const errorMsg = document.getElementById('errorMsg');
     const chatMessages = document.getElementById('chatMessages');
     const chatInput = document.getElementById('chatInput');
     const sendBtn = document.getElementById('sendBtn');
     const typingIndicator = document.getElementById('typingIndicator');
 
-    async function verifySession() {
-      if (!sessionId) return false;
+    async function verifyToken() {
+      if (!token) return false;
       
       try {
-        const resp = await fetch(`${API_BASE}/api/verify`, {
-          headers: { 'X-Session-Id': sessionId }
+        const resp = await fetch('/api/verify', {
+          headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await resp.json();
         return data.authenticated;
@@ -398,65 +278,17 @@
       }
     }
 
-    function showChat(username) {
-      loginContainer.style.display = 'none';
-      chatContainer.style.display = 'flex';
-      document.getElementById('userDisplay').textContent = `Usuario: ${username}`;
+    async function init() {
+      const authenticated = await verifyToken();
+      
+      if (!authenticated) {
+        window.location.href = 'index.html';
+        return;
+      }
+      
+      document.getElementById('userDisplay').textContent = 'Usuario: naprolab';
       chatInput.focus();
     }
-
-    function showLogin() {
-      loginContainer.style.display = 'flex';
-      chatContainer.style.display = 'none';
-      sessionId = null;
-      localStorage.removeItem('sessionId');
-      conversationHistory = [];
-    }
-
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-      const loginBtn = document.getElementById('loginBtn');
-      
-      loginBtn.disabled = true;
-      errorMsg.style.display = 'none';
-      
-      try {
-        const resp = await fetch(`${API_BASE}/api/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, password })
-        });
-        
-        const data = await resp.json();
-        
-        if (data.success) {
-          sessionId = data.sessionId;
-          localStorage.setItem('sessionId', sessionId);
-          showChat(username);
-        } else {
-          errorMsg.style.display = 'block';
-        }
-      } catch (err) {
-        errorMsg.textContent = 'Error de conexión';
-        errorMsg.style.display = 'block';
-      } finally {
-        loginBtn.disabled = false;
-      }
-    });
-
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-      if (sessionId) {
-        await fetch(`${API_BASE}/api/logout`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionId })
-        });
-      }
-      showLogin();
-    });
 
     function addMessage(content, type) {
       const msg = document.createElement('div');
@@ -474,7 +306,7 @@
     }
 
     async function sendMessage(message) {
-      if (!message.trim() || !sessionId) return;
+      if (!message.trim() || !token) return;
       
       addMessage(message, 'user');
       conversationHistory.push({ role: 'user', content: message });
@@ -485,14 +317,13 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
       
       try {
-        const resp = await fetch(`${API_BASE}/api/chat`, {
+        const resp = await fetch('/api/chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Session-Id': sessionId
+            'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
-            sessionId,
             message,
             conversationHistory
           })
@@ -527,11 +358,7 @@
       });
     });
 
-    (async () => {
-      if (await verifySession()) {
-        showChat('naprolab');
-      }
-    })();
+    init();
   </script>
 </body>
 </html>

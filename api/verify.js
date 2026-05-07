@@ -1,25 +1,22 @@
-const sessions = require('./sessions');
+const { verifyToken } = require('./auth');
 
 module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Session-Id');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
   }
   
-  const sessionId = req.headers['x-session-id'];
+  const decoded = verifyToken(req);
   
-  if (!sessionId || !sessions.has(sessionId)) {
+  if (!decoded) {
     return res.status(401).json({ authenticated: false });
   }
   
-  const session = sessions.get(sessionId);
-  session.lastActivity = new Date().toISOString();
-  
   res.json({
     authenticated: true,
-    username: session.username
+    username: decoded.username
   });
 };

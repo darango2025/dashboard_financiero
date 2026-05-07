@@ -1,21 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-
-const sessions = require('./sessions');
+const { verifyToken } = require('./auth');
 
 const API_KEY = process.env.API_KEY_DS;
 const MODEL = process.env.DEEPSEEK_MODEL || 'deepseek-v4-pro';
 
 let ragData = null;
-let dashboardData = null;
 
 function loadRAGData() {
   try {
     const ragPath = path.join(__dirname, '..', 'public', 'data', 'rag_summaries.json');
-    const dataPath = path.join(__dirname, '..', 'public', 'data', 'dashboard_data.json');
-    
     ragData = JSON.parse(fs.readFileSync(ragPath, 'utf-8'));
-    dashboardData = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
   } catch (err) {
     console.error('Error loading RAG data:', err.message);
   }
@@ -90,7 +85,7 @@ INSTRUCCIONES:
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-Session-Id');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -100,18 +95,17 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
   
-  const { sessionId, message, conversationHistory = [] } = req.body;
+  const decoded = verifyToken(req);
   
-  if (!sessionId || !sessions.has(sessionId)) {
-    return res.status(401).json({ error: 'Sesión no válida' });
+  if (!decoded) {
+    return res.status(401).json({ error: 'No autorizado' });
   }
+  
+  const { message, conversationHistory = [] } = req.body;
   
   if (!message) {
     return res.status(400).json({ error: 'Mensaje requerido' });
   }
-  
-  const session = sessions.get(sessionId);
-  session.lastActivity = new Date().toISOString();
   
   try {
     const systemPrompt = buildSystemPrompt();

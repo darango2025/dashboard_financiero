@@ -163,10 +163,12 @@
     }
 
     .kpi-value {
-      font-size: 26px;
+      font-size: 20px;
       font-weight: 700;
       color: var(--text-primary);
       line-height: 1.2;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     .kpi-sub {
@@ -399,6 +401,195 @@
       flex-shrink: 0;
     }
 
+    /* Login overlay */
+    .login-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .login-overlay.hidden { display: none; }
+
+    .login-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3);
+    }
+
+    .login-box h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .login-box p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .login-btn:hover { opacity: 0.9; }
+    .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .error-msg {
+      color: var(--accent-red);
+      font-size: 13px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* Temporal filters */
+    .temporal-filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+      background: var(--bg-secondary);
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-group label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .filter-btn {
+      padding: 8px 16px;
+      background: var(--accent-blue);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .filter-btn:hover { opacity: 0.9; }
+
+    .filter-btn.reset {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    .filter-period {
+      display: flex;
+      gap: 4px;
+    }
+
+    .period-btn {
+      padding: 6px 12px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 6px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .period-btn:hover {
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+
+    .period-btn.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: white;
+    }
+
+    .logout-btn {
+      padding: 6px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
+    .logout-btn:hover {
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+    }
+
     @media (max-width: 1200px) {
       .charts-grid { grid-template-columns: 1fr; }
       .kpi-grid { grid-template-columns: repeat(3, 1fr); }
@@ -412,17 +603,63 @@
   </style>
 </head>
 <body>
+  <!-- Login Overlay -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+      <h1>Dashboard Financiero ADATEC</h1>
+      <p>Sistema de análisis de cartera</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Usuario</label>
+          <input type="text" id="username" required autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" id="password" required autocomplete="current-password">
+        </div>
+        <button type="submit" class="login-btn" id="loginBtn">Iniciar Sesión</button>
+        <div class="error-msg" id="errorMsg">Credenciales inválidas</div>
+      </form>
+    </div>
+  </div>
+
   <div class="header">
     <h1>Dashboard de Cartera</h1>
     <div class="header-info">
       <span id="genDate"></span>
       <span class="badge">ADATEC</span>
       <span style="color: var(--text-muted); font-size: 12px;">NPROSERVER</span>
-      <a href="chatbot.html" style="color: var(--accent-cyan); text-decoration: none; font-size: 13px; padding: 6px 12px; border: 1px solid var(--accent-cyan); border-radius: 6px;">🤖 Chatbot</a>
+      <a href="chatbot.html" style="color: var(--accent-cyan); text-decoration: none; font-size: 13px; padding: 6px 12px; border: 1px solid var(--accent-cyan); border-radius: 6px;"> Chatbot</a>
+      <span id="userDisplay" style="display:none;"></span>
+      <button class="logout-btn" id="logoutBtn" style="display:none;">Cerrar Sesión</button>
     </div>
   </div>
 
   <div class="container">
+    <!-- Temporal Filters -->
+    <div class="temporal-filters" id="temporalFilters">
+      <div class="filter-group">
+        <label>Período rápido:</label>
+        <div class="filter-period">
+          <button class="period-btn" data-period="1m">1 Mes</button>
+          <button class="period-btn" data-period="3m">3 Meses</button>
+          <button class="period-btn" data-period="6m">6 Meses</button>
+          <button class="period-btn active" data-period="1y">1 Año</button>
+          <button class="period-btn" data-period="all">Todo</button>
+        </div>
+      </div>
+      <div class="filter-group">
+        <label>Desde:</label>
+        <input type="month" id="filterDesde">
+      </div>
+      <div class="filter-group">
+        <label>Hasta:</label>
+        <input type="month" id="filterHasta">
+      </div>
+      <button class="filter-btn" id="applyFilter">Aplicar</button>
+      <button class="filter-btn reset" id="resetFilter">Reset</button>
+    </div>
+
     <div class="tabs">
       <button class="tab-btn active" data-tab="overview">Resumen General</button>
       <button class="tab-btn" data-tab="evolution">Evolucion Financiera</button>
@@ -1284,6 +1521,177 @@
       });
     });
 
+    // Login & Auth
+    let authToken = localStorage.getItem('authToken');
+    const loginOverlay = document.getElementById('loginOverlay');
+    const loginForm = document.getElementById('loginForm');
+    const errorMsg = document.getElementById('errorMsg');
+    const userDisplay = document.getElementById('userDisplay');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    async function verifyAuth() {
+      if (!authToken) return false;
+      try {
+        const resp = await fetch('/api/verify', {
+          headers: { 'Authorization': `Bearer ${authToken}` }
+        });
+        const data = await resp.json();
+        return data.authenticated;
+      } catch {
+        return false;
+      }
+    }
+
+    function showDashboard() {
+      loginOverlay.classList.add('hidden');
+      userDisplay.style.display = 'inline';
+      userDisplay.textContent = 'naprolab';
+      logoutBtn.style.display = 'inline';
+    }
+
+    function showLogin() {
+      loginOverlay.classList.remove('hidden');
+      userDisplay.style.display = 'none';
+      logoutBtn.style.display = 'none';
+      authToken = null;
+      localStorage.removeItem('authToken');
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const loginBtn = document.getElementById('loginBtn');
+      
+      loginBtn.disabled = true;
+      errorMsg.style.display = 'none';
+      
+      try {
+        const resp = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await resp.json();
+        
+        if (data.success) {
+          authToken = data.token;
+          localStorage.setItem('authToken', authToken);
+          showDashboard();
+        } else {
+          errorMsg.style.display = 'block';
+        }
+      } catch {
+        errorMsg.textContent = 'Error de conexión';
+        errorMsg.style.display = 'block';
+      } finally {
+        loginBtn.disabled = false;
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      showLogin();
+    });
+
+    // Temporal Filters
+    let filteredData = null;
+    const filterDesde = document.getElementById('filterDesde');
+    const filterHasta = document.getElementById('filterHasta');
+
+    function applyTemporalFilter(desde, hasta) {
+      if (!DATA) return;
+      
+      filteredData = JSON.parse(JSON.stringify(DATA));
+      
+      if (desde && hasta) {
+        const desdeDate = new Date(desde + '-01');
+        const hastaDate = new Date(hasta + '-01');
+        hastaDate.setMonth(hastaDate.getMonth() + 1);
+        
+        filteredData.facturacion_mensual = DATA.facturacion_mensual.filter(f => {
+          const d = new Date(f.mes);
+          return d >= desdeDate && d < hastaDate;
+        });
+        
+        filteredData.recaudos_mensual = DATA.recaudos_mensual.filter(r => {
+          const d = new Date(r.mes);
+          return d >= desdeDate && d < hastaDate;
+        });
+        
+        filteredData.pedidos_mensual = DATA.pedidos_mensual.filter(p => {
+          const d = new Date(p.mes);
+          return d >= desdeDate && d < hastaDate;
+        });
+      }
+      
+      // Re-render charts
+      renderedTabs.clear();
+      const activeTab = document.querySelector('.tab-btn.active')?.dataset.tab || 'overview';
+      renderTabCharts(activeTab);
+    }
+
+    document.querySelectorAll('.period-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const period = btn.dataset.period;
+        const now = new Date();
+        let desde, hasta;
+        
+        switch(period) {
+          case '1m':
+            desde = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            hasta = now;
+            break;
+          case '3m':
+            desde = new Date(now.getFullYear(), now.getMonth() - 3, 1);
+            hasta = now;
+            break;
+          case '6m':
+            desde = new Date(now.getFullYear(), now.getMonth() - 6, 1);
+            hasta = now;
+            break;
+          case '1y':
+            desde = new Date(now.getFullYear() - 1, now.getMonth(), 1);
+            hasta = now;
+            break;
+          case 'all':
+            applyTemporalFilter(null, null);
+            return;
+        }
+        
+        const desdeStr = desde.getFullYear() + '-' + String(desde.getMonth() + 1).padStart(2, '0');
+        const hastaStr = hasta.getFullYear() + '-' + String(hasta.getMonth() + 1).padStart(2, '0');
+        
+        filterDesde.value = desdeStr;
+        filterHasta.value = hastaStr;
+        applyTemporalFilter(desdeStr, hastaStr);
+      });
+    });
+
+    document.getElementById('applyFilter').addEventListener('click', () => {
+      applyTemporalFilter(filterDesde.value || null, filterHasta.value || null);
+    });
+
+    document.getElementById('resetFilter').addEventListener('click', () => {
+      document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-period="all"]').classList.add('active');
+      filterDesde.value = '';
+      filterHasta.value = '';
+      filteredData = null;
+      renderedTabs.clear();
+      const activeTab = document.querySelector('.tab-btn.active')?.dataset.tab || 'overview';
+      renderTabCharts(activeTab);
+    });
+
+    // Override DATA accessor to use filtered data
+    const originalData = {};
+    Object.defineProperty(window, 'DATA', {
+      get: () => filteredData || originalData._value,
+      set: (val) => { originalData._value = val; }
+    });
+
     // Init
     const renderedTabs = new Set();
 
@@ -1302,6 +1710,14 @@
     }
 
     async function init() {
+      const authenticated = await verifyAuth();
+      
+      if (!authenticated) {
+        showLogin();
+      } else {
+        showDashboard();
+      }
+      
       try {
         const resp = await fetch('data/dashboard_data.json');
         if (!resp.ok) throw new Error(`HTTP ${resp.status}: ${resp.statusText}`);

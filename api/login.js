@@ -1,13 +1,6 @@
-const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-const VALID_USER = 'naprolab';
-const VALID_PASSWORD = 'naprolab';
-
-const sessions = new Map();
-
-function generateSessionId() {
-  return crypto.randomBytes(16).toString('hex');
-}
+const SECRET = process.env.SESSION_SECRET || 'naprolab_financial_dashboard_secret_2026';
 
 module.exports = (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,17 +17,15 @@ module.exports = (req, res) => {
   
   const { username, password } = req.body;
   
-  if (username === VALID_USER && password === VALID_PASSWORD) {
-    const sessionId = generateSessionId();
-    sessions.set(sessionId, {
-      username,
-      createdAt: new Date().toISOString(),
-      lastActivity: new Date().toISOString()
-    });
+  if (username === 'naprolab' && password === 'naprolab') {
+    const token = jwt.sign(
+      { username, exp: Math.floor(Date.now() / 1000) + (24 * 60 * 60) },
+      SECRET
+    );
     
     return res.json({
       success: true,
-      sessionId,
+      token,
       message: 'Login exitoso'
     });
   }
