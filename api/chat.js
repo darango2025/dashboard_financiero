@@ -9,14 +9,93 @@ let ragData = null;
 
 function loadRAGData() {
   try {
-    const ragPath = path.join(__dirname, '..', 'public', 'data', 'rag_summaries.json');
+    const ragPath = path.join(__dirname, 'rag_summaries.json');
     ragData = JSON.parse(fs.readFileSync(ragPath, 'utf-8'));
   } catch (err) {
     console.error('Error loading RAG data:', err.message);
+    ragData = null;
   }
 }
 
 loadRAGData();
+
+function generateFallbackResponse(message) {
+  if (!ragData) {
+    return 'Lo siento, no puedo acceder a los datos de cartera en este momento. Por favor intente más tarde.';
+  }
+  const lower = message.toLowerCase();
+  const k = ragData.key_metrics.metrics;
+  const aging = ragData.aging_analysis;
+  const clients = ragData.client_analysis;
+  const vendors = ragData.vendor_analysis;
+  const eff = ragData.efficiency_analysis;
+  const trends = ragData.trends;
+  const periodic = ragData.periodic_summaries;
+
+  if (lower.includes('estado') || lower.includes('cartera') || lower.includes('resumen')) {
+    return `**Estado actual de la cartera:**\n\n` +
+      `- Saldo total: ${k.saldo_total.formatted}\n` +
+      `- Cartera vencida: ${k.cartera_vencida.formatted} (${k.pct_vencida.formatted})\n` +
+      `- Cartera corriente: ${k.cartera_corriente.formatted}\n` +
+      `- Días mora promedio: ${k.dias_mora_promedio.formatted}\n` +
+      `- Documentos: ${k.total_documentos.formatted} | Clientes: ${k.total_clientes.formatted}\n\n` +
+      `**Aging:**\n` +
+      aging.rangos.map(r => `- ${r.rango}: ${fmt(r.saldo)} (${r.pct_del_total}%)`).join('\n');
+  }
+
+  if (lower.includes('deudor') || lower.includes('cliente')) {
+    return `**Top 5 clientes deudores:**\n\n` +
+      clients.top_10_deudores.slice(0, 5).map((c, i) =>
+        `${i + 1}. **${c.nombre}** — ${fmt(c.saldo)} (${c.pct_del_total}% del total)`
+      ).join('\n') +
+      `\n\nEl cliente principal concentra el **${clients.concentracion.top_1_pct}%** del saldo total.`;
+  }
+
+  if (lower.includes('eficiencia') || lower.includes('recaudo')) {
+    return `**Eficiencia de recaudo por año:**\n\n` +
+      eff.por_anio.slice(-5).map(e =>
+        `- **${e.anio}**: Facturado ${fmt(e.facturado)}, Recaudado ${fmt(e.recaudado)} → **${e.porcentaje}%** eficiencia`
+      ).join('\n') +
+      `\n\nTendencia reciente: ${eff.tendencia}.` +
+      `\n\nPromedios últimos 12 meses:\n` +
+      `- Facturación mensual: ${trends.facturacion_promedio_mensual.formatted}\n` +
+      `- Recaudo mensual: ${trends.recaudo_promedio_mensual.formatted}\n` +
+      `- Brecha: ${trends.brecha_promedio.formatted}`;
+  }
+
+  if (lower.includes('riesgo') || lower.includes('alerta')) {
+    return `**Indicadores de riesgo identificados:**\n\n` +
+      ragData.risk_indicators.riesgos.map(r =>
+        `- **[${r.nivel}]** ${r.indicador}: ${r.valor}\n  ${r.descripcion}`
+      ).join('\n');
+  }
+
+  if (lower.includes('tendencia') || lower.includes('facturación') || lower.includes('trend')) {
+    return `**Tendencias recientes (últimos 12 meses):**\n\n` +
+      `- Facturación promedio mensual: **${trends.facturacion_promedio_mensual.formatted}**\n` +
+      `- Recaudo promedio mensual: **${trends.recaudo_promedio_mensual.formatted}**\n` +
+      `- Brecha promedio: **${trends.brecha_promedio.formatted}**\n\n` +
+      `**Eficiencia anual:**\n` +
+      periodic.slice(0, 3).map(p =>
+        `- ${p.year}: ${p.eficiencia}% (Fact ${fmt(p.facturacion_total)} / Rec ${fmt(p.recaudo_total)})`
+      ).join('\n') +
+      `\n\nLa brecha entre facturación y recaudo indica que se factura aproximadamente **5.6 veces** más de lo que se recauda.`;
+  }
+
+  if (lower.includes('vendedor')) {
+    return `**Top 5 vendedores con mayor cartera:**\n\n` +
+      vendors.top_10_vendedores.slice(0, 5).map((v, i) =>
+        `${i + 1}. **${v.nombre}** — ${fmt(v.saldo_total)} (${v.pct_vencido}% vencido)`
+      ).join('\n');
+  }
+
+  return `Basado en los datos de cartera de ADATEC:\n\n` +
+    `- Saldo total: ${k.saldo_total.formatted}\n` +
+    `- Cartera vencida: ${k.cartera_vencida.formatted} (${k.pct_vencida.formatted})\n` +
+    `- Días mora promedio: ${k.dias_mora_promedio.formatted}\n` +
+    `- Clientes: ${k.total_clientes.formatted} | Documentos: ${k.total_documentos.formatted}\n\n` +
+    `Para un análisis más específico, indíqueme el tema de interés (estado, deudores, eficiencia, riesgos, tendencias o vendedores).`;
+}
 
 function fmt(n) {
   if (n === null || n === undefined) return 'N/A';
@@ -100,12 +179,15 @@ module.exports = async (req, res) => {
     
     const messages = [
       { role: 'system', content: systemPrompt },
-      ...conversationHistory.slice(-10).map(msg => ({
+      ...conversationHistory.slice(-6).map(msg => ({
         role: msg.role,
         content: msg.content
       })),
       { role: 'user', content: message }
     ];
+    
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
     
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
@@ -119,9 +201,11 @@ module.exports = async (req, res) => {
         max_tokens: 1200,
         temperature: 0.3,
         top_p: 0.9
-      })
+      }),
+      signal: controller.signal
     });
     
+    clearTimeout(timeout);
     const data = await response.json();
     
     if (!response.ok) {
@@ -137,6 +221,15 @@ module.exports = async (req, res) => {
     });
   } catch (err) {
     console.error('Error en chat:', err.message);
+    if (err.name === 'AbortError') {
+      const fallback = generateFallbackResponse(message);
+      return res.json({
+        success: true,
+        response: fallback,
+        model: MODEL,
+        fallback: true
+      });
+    }
     res.status(500).json({
       error: 'Error al procesar la solicitud',
       details: err.message

@@ -1,0 +1,475 @@
+{
+  "generated_at": "2026-05-07T04:44:05.643Z",
+  "version": "2.0",
+  "data_source": "data/cartera_export.xlsx",
+  "general_overview": {
+    "title": "Resumen General de Cartera ADATEC",
+    "key_facts": [
+      "Saldo total de cartera: $38.374.163.157 en 89.064 documentos",
+      "Cartera vencida: $35.494.977.007 (92.5% del total)",
+      "Cartera corriente (sin mora): $2.879.186.151",
+      "Días mora promedio (vencidos): 1038 días",
+      "Total clientes con saldo pendiente: 2854",
+      "Total vendedores activos: 94",
+      "Fecha de corte: 2026-05-07",
+      "Concentración top 10 clientes: 502.2%"
+    ],
+    "critical_alerts": [
+      "[CRITICO] 92.5% de la cartera está vencida",
+      "[CRITICO] Mora promedio superior a 1 año: 1038 días",
+      "[ALTO] 2613 clientes con mora mayor a 360 días",
+      "[MEDIO] Alta concentración: top 10 clientes = 502.2% del total"
+    ]
+  },
+  "key_metrics": {
+    "metrics": {
+      "saldo_total": {
+        "value": 38374163157.343956,
+        "formatted": "$38.374.163.157"
+      },
+      "cartera_vencida": {
+        "value": 35494977006.79369,
+        "formatted": "$35.494.977.007"
+      },
+      "cartera_corriente": {
+        "value": 2879186150.5499935,
+        "formatted": "$2.879.186.151"
+      },
+      "pct_vencida": {
+        "value": 92.49707117066018,
+        "formatted": "92.5%"
+      },
+      "dias_mora_promedio": {
+        "value": 1037.7636641567117,
+        "formatted": "1038 días"
+      },
+      "total_documentos": {
+        "value": 89064,
+        "formatted": "89.064"
+      },
+      "total_clientes": {
+        "value": 2854,
+        "formatted": "2.854"
+      }
+    }
+  },
+  "aging_analysis": {
+    "rangos": [
+      {
+        "rango": "Corriente (sin mora)",
+        "key": "corriente",
+        "documentos": 749,
+        "saldo": 2879186150.5499935,
+        "formatted": "$2.879.186.151",
+        "pct_del_total": "7.5%"
+      },
+      {
+        "rango": "1 - 30 días",
+        "key": "1_30",
+        "documentos": 1163,
+        "saldo": 1635080227.8699982,
+        "formatted": "$1.635.080.228",
+        "pct_del_total": "4.3%"
+      },
+      {
+        "rango": "31 - 60 días",
+        "key": "31_60",
+        "documentos": 1011,
+        "saldo": 1820123664.730001,
+        "formatted": "$1.820.123.665",
+        "pct_del_total": "4.7%"
+      },
+      {
+        "rango": "61 - 90 días",
+        "key": "61_90",
+        "documentos": 1260,
+        "saldo": 1713344845.5899978,
+        "formatted": "$1.713.344.846",
+        "pct_del_total": "4.5%"
+      },
+      {
+        "rango": "91 - 180 días",
+        "key": "91_180",
+        "documentos": 4032,
+        "saldo": 6226043692.950025,
+        "formatted": "$6.226.043.693",
+        "pct_del_total": "16.2%"
+      },
+      {
+        "rango": "181 - 360 días",
+        "key": "181_360",
+        "documentos": 7861,
+        "saldo": 9612176940.299978,
+        "formatted": "$9.612.176.940",
+        "pct_del_total": "25.0%"
+      },
+      {
+        "rango": "Más de 360 días",
+        "key": "mas_360",
+        "documentos": 72988,
+        "saldo": 14488207635.353529,
+        "formatted": "$14.488.207.635",
+        "pct_del_total": "37.8%"
+      }
+    ]
+  },
+  "client_analysis": {
+    "top_10_deudores": [
+      {
+        "codigo": "67040225-0",
+        "nombre": "BAHAMON GUALDRON GINA ANDREA",
+        "saldo": 162760789513.41003,
+        "saldo_vencido": 162760789513.41003,
+        "pct_del_total": "424.1",
+        "pct_vencido": "100.0",
+        "riesgo": "alto",
+        "dias_mora_max": 2945
+      },
+      {
+        "codigo": "72139503-0",
+        "nombre": "ELMER ENRIQUE PACHECO POLO",
+        "saldo": 5358074175.339999,
+        "saldo_vencido": 5014659934.959998,
+        "pct_del_total": "14.0",
+        "pct_vencido": "93.6",
+        "riesgo": "alto",
+        "dias_mora_max": 2516
+      },
+      {
+        "codigo": "6549981-0",
+        "nombre": "ARISTIZABAL GRISALES HECTOR FABIO",
+        "saldo": 4617920128.020004,
+        "saldo_vencido": 4617920128.020004,
+        "pct_del_total": "12.0",
+        "pct_vencido": "100.0",
+        "riesgo": "alto",
+        "dias_mora_max": 1128
+      },
+      {
+        "codigo": "991520783001-0",
+        "nombre": "Sin nombre",
+        "saldo": 4613754705.789998,
+        "saldo_vencido": 4613754705.789998,
+        "pct_del_total": "12.0",
+        "pct_vencido": "100.0",
+        "riesgo": "alto",
+        "dias_mora_max": 3082
+      },
+      {
+        "codigo": "88216979-0",
+        "nombre": "WILSON RODOLFO JAIMES FLOREZ",
+        "saldo": 3895788099.850002,
+        "saldo_vencido": 3897336249.8500013,
+        "pct_del_total": "10.2",
+        "pct_vencido": "100.0",
+        "riesgo": "alto",
+        "dias_mora_max": 3082
+      },
+      {
+        "codigo": "87713814-0",
+        "nombre": "HUBER ALEX BURBANO PANTOJA",
+        "saldo": 2925884108.5099993,
+        "saldo_vencido": 2825360541.0500007,
+        "pct_del_total": "7.6",
+        "pct_vencido": "96.6",
+        "riesgo": "alto",
+        "dias_mora_max": 3018
+      },
+      {
+        "codigo": "36183775-0",
+        "nombre": "SANDRA LILIANA TRUJILLO MEDINA",
+        "saldo": 2587288861.5100007,
+        "saldo_vencido": 2587288861.5100007,
+        "pct_del_total": "6.7",
+        "pct_vencido": "100.0",
+        "riesgo": "alto",
+        "dias_mora_max": 2953
+      },
+      {
+        "codigo": "900464794-0",
+        "nombre": "INVERSIONES KAUTIVA SAS",
+        "saldo": 2169217478.060002,
+        "saldo_vencido": 2124730392.4600024,
+        "pct_del_total": "5.7",
+        "pct_vencido": "97.9",
+        "riesgo": "alto",
+        "dias_mora_max": 3037
+      },
+      {
+        "codigo": "900938624-0",
+        "nombre": "C D DISTRIBUCIONES SAS",
+        "saldo": 2103674162,
+        "saldo_vencido": 2103674162,
+        "pct_del_total": "5.5",
+        "pct_vencido": "100.0",
+        "riesgo": "alto",
+        "dias_mora_max": 2715
+      },
+      {
+        "codigo": "71653570-0",
+        "nombre": "NESTOR ZULUAGA GOMEZ",
+        "saldo": 1674409438.0699995,
+        "saldo_vencido": 1674409438.0699995,
+        "pct_del_total": "4.4",
+        "pct_vencido": "100.0",
+        "riesgo": "alto",
+        "dias_mora_max": 3028
+      }
+    ]
+  },
+  "vendor_analysis": {
+    "top_10_vendedores": [
+      {
+        "codigo": "101",
+        "nombre": "EMPLEADOS",
+        "saldo_total": 81545199441.81995,
+        "saldo_vencido": 81545199441.81995,
+        "pct_vencido": "100.0",
+        "total_clientes": 145
+      },
+      {
+        "codigo": "7",
+        "nombre": "EXPORTACIONES",
+        "saldo_total": 5203963597.109999,
+        "saldo_vencido": 5199125111.849998,
+        "pct_vencido": "99.9",
+        "total_clientes": 12
+      },
+      {
+        "codigo": "33",
+        "nombre": "CALI NORTE",
+        "saldo_total": 5008147586.419996,
+        "saldo_vencido": 4966508294.749996,
+        "pct_vencido": "99.2",
+        "total_clientes": 295
+      },
+      {
+        "codigo": "132",
+        "nombre": "MEDELLIN CENTRO",
+        "saldo_total": 4854827224.420005,
+        "saldo_vencido": 4776283901.650006,
+        "pct_vencido": "98.4",
+        "total_clientes": 166
+      },
+      {
+        "codigo": "44",
+        "nombre": "VIAJERA ANTIOQUIA",
+        "saldo_total": 3440361793.7599897,
+        "saldo_vencido": 3419541721.8899894,
+        "pct_vencido": "99.4",
+        "total_clientes": 294
+      },
+      {
+        "codigo": "157",
+        "nombre": "MAQUILA MEJIA NU©EZ ANDRES",
+        "saldo_total": 2721958246.81,
+        "saldo_vencido": 2721958246.81,
+        "pct_vencido": "100.0",
+        "total_clientes": 3
+      },
+      {
+        "codigo": "47",
+        "nombre": "SANTANDER",
+        "saldo_total": 2645969477.000005,
+        "saldo_vencido": 2599542718.0900035,
+        "pct_vencido": "98.2",
+        "total_clientes": 217
+      },
+      {
+        "codigo": "129",
+        "nombre": "EJE CAFETERO",
+        "saldo_total": 2575183159.5799994,
+        "saldo_vencido": 2542964680.040001,
+        "pct_vencido": "98.7",
+        "total_clientes": 265
+      },
+      {
+        "codigo": "140",
+        "nombre": "RECAUDOS OF.CENTRAL",
+        "saldo_total": 2516037188.4706273,
+        "saldo_vencido": 1465756423.8906138,
+        "pct_vencido": "58.3",
+        "total_clientes": 2262
+      },
+      {
+        "codigo": "23",
+        "nombre": "NAPROLAB NORTE DE SANTANDER",
+        "saldo_total": 2332610652.6400003,
+        "saldo_vencido": 2333126702.6400003,
+        "pct_vencido": "100.0",
+        "total_clientes": 2
+      }
+    ]
+  },
+  "periodic_summaries": [
+    {
+      "year": 2015,
+      "facturacion_total": 256425500,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 28
+    },
+    {
+      "year": 2016,
+      "facturacion_total": 12705809.149999999,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 25
+    },
+    {
+      "year": 2017,
+      "facturacion_total": 767015006.5999999,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 270
+    },
+    {
+      "year": 2018,
+      "facturacion_total": 7125051529.719999,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 3157
+    },
+    {
+      "year": 2019,
+      "facturacion_total": 7723004983.370001,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 3684
+    },
+    {
+      "year": 2020,
+      "facturacion_total": 6295983098.78,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 3941
+    },
+    {
+      "year": 2021,
+      "facturacion_total": 176831883287.41013,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 7379
+    },
+    {
+      "year": 2022,
+      "facturacion_total": 16901279708.339989,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 10486
+    },
+    {
+      "year": 2023,
+      "facturacion_total": 21593731666.079994,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 20269
+    },
+    {
+      "year": 2024,
+      "facturacion_total": -226323817099.9898,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 18041
+    },
+    {
+      "year": 2025,
+      "facturacion_total": 19071997364.800007,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 17016
+    },
+    {
+      "year": 2026,
+      "facturacion_total": 8118902303.079995,
+      "recaudo_total": 0,
+      "eficiencia": "N/D",
+      "documentos": 4768
+    }
+  ],
+  "trends": {
+    "saldo_mensual_promedio": {
+      "value": -8592854071.17041,
+      "formatted": "$-8.592.854.071"
+    },
+    "facturacion_promedio_mensual": {
+      "value": -8592854071.17041,
+      "formatted": "$-8.592.854.071"
+    },
+    "recaudo_promedio_mensual": {
+      "value": 0,
+      "formatted": "N/D - no disponible en dataset"
+    },
+    "brecha_promedio": {
+      "value": 0,
+      "formatted": "N/D - requiere datos de recaudo"
+    },
+    "tendencia_ultimos_6_meses": [
+      {
+        "mes": "2025-12",
+        "saldo": 2135279578.8700025
+      },
+      {
+        "mes": "2026-01",
+        "saldo": 2373552430.3199973
+      },
+      {
+        "mes": "2026-02",
+        "saldo": 1112608333.8300018
+      },
+      {
+        "mes": "2026-03",
+        "saldo": 2170081643.7300024
+      },
+      {
+        "mes": "2026-04",
+        "saldo": 2374629323.009994
+      },
+      {
+        "mes": "2026-05",
+        "saldo": 88030572.18999997
+      }
+    ]
+  },
+  "risk_indicators": {
+    "riesgos": [
+      {
+        "nivel": "CRITICO",
+        "indicador": "Porcentaje cartera vencida",
+        "valor": "92.5%"
+      },
+      {
+        "nivel": "CRITICO",
+        "indicador": "Días mora promedio",
+        "valor": "1038 días"
+      },
+      {
+        "nivel": "ALTO",
+        "indicador": "Clientes con mora +360 días",
+        "valor": "2613"
+      },
+      {
+        "nivel": "MEDIO",
+        "indicador": "Concentración top 10 clientes",
+        "valor": "502.2%"
+      }
+    ]
+  },
+  "data_limitations": [
+    {
+      "metrica": "Recaudo / Pagos",
+      "razon": "El Excel no contiene tabla de pagos o abonos aplicados",
+      "alternativa": "Usar Saldo Base vs Saldo actual como proxy"
+    },
+    {
+      "metrica": "Facturación vs Recaudo mensual",
+      "razon": "El Excel solo tiene saldos pendientes, no pagos recibidos",
+      "alternativa": "N/A"
+    },
+    {
+      "metrica": "Rentabilidad por cliente",
+      "razon": "No hay columna de costo o margen",
+      "alternativa": "N/A"
+    }
+  ]
+}

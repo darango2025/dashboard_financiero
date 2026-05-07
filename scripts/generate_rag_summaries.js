@@ -3,6 +3,7 @@ const path = require('path');
 
 const dataDir = path.join(__dirname, '..', 'data');
 const publicDataDir = path.join(__dirname, '..', 'public', 'data');
+const apiDataDir = path.join(__dirname, '..', 'api');
 
 function loadData() {
   const rawData = fs.readFileSync(path.join(dataDir, 'dashboard_data.json'), 'utf-8');
@@ -34,11 +35,15 @@ function generateRAGSummaries() {
     risk_indicators: generateRiskIndicators(data)
   };
 
-  const outputPath = path.join(publicDataDir, 'rag_summaries.json');
-  fs.writeFileSync(outputPath, JSON.stringify(summaries, null, 2));
+  const publicPath = path.join(publicDataDir, 'rag_summaries.json');
+  const apiPath = path.join(apiDataDir, 'rag_summaries.json');
   
-  console.log(`RAG summaries generated: ${outputPath}`);
-  console.log(`File size: ${(fs.statSync(outputPath).size / 1024).toFixed(1)} KB`);
+  fs.writeFileSync(publicPath, JSON.stringify(summaries, null, 2));
+  fs.writeFileSync(apiPath, JSON.stringify(summaries, null, 2));
+  
+  console.log(`RAG summaries generated: ${publicPath}`);
+  console.log(`RAG summaries copied to API: ${apiPath}`);
+  console.log(`File size: ${(fs.statSync(publicPath).size / 1024).toFixed(1)} KB`);
   
   return summaries;
 }
