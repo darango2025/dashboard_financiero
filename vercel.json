@@ -22,5 +22,11 @@
       "memory": 1024,
       "maxDuration": 60
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/sync/rsales?cron=true&entity=all",
+      "schedule": "0 */6 * * *"
+    }
+  ]
 }

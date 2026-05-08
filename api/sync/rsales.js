@@ -1,9 +1,11 @@
 /**
  * api/sync/rsales.js — Endpoint para sincronizar datos desde RSales API
+ * Soporta Vercel Cron Jobs (GET) y manual sync (POST)
  */
 
 const { verifyToken } = require('../auth');
 const rsales = require('../../lib/rsales');
+const dataModule = require('../data');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -11,12 +13,17 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
-  
-  const decoded = verifyToken(req);
-  if (!decoded) return res.status(401).json({ error: 'No autorizado' });
 
-  // GET /api/sync/rsales/status - Verificar conectividad
-  if (req.method === 'GET' && req.url.includes('/status')) {
+  // Para cron jobs (GET sin auth) permitimos si viene de Vercel
+  const isCron = req.query.cron === 'true' || req.headers['x-vercel-cron'] === '1';
+  
+  if (!isCron) {
+    const decoded = verifyToken(req);
+    if (!decoded) return res.status(401).json({ error: 'No autorizado' });
+  }
+
+  // GET /api/sync/rsales?status=true - Verificar conectividad
+  if (req.method === 'GET' && (req.query.status === 'true' || req.url.includes('/status'))) {
     try {
       const token = await rsales.getToken();
       return res.json({
@@ -34,12 +41,13 @@ module.exports = async (req, res) => {
     }
   }
 
-  // POST /api/sync/rsales - Sincronizar datos
-  if (req.method !== 'POST') {
+  // GET /api/sync/rsales?cron=true — Vercel Cron Job
+  // POST /api/sync/rsales — Manual sync
+  if (req.method !== 'POST' && req.method !== 'GET') {
     return res.status(405).json({ error: 'Método no permitido' });
   }
 
-  const { entity } = req.body || {}; // entity: 'receivables', 'orders', 'customers', 'sellers', 'all'
+  const entity = req.body?.entity || req.query?.entity || 'all';
 
   try {
     let result = {};
@@ -71,10 +79,27 @@ module.exports = async (req, res) => {
         break;
     }
 
+    // Invalidar cache del endpoint de datos para forzar refresh
+    if (dataModule.invalidateCache) {
+      dataModule.invalidateCache();
+    }
+
+    // Pre-warm cache: fetch fresh data immediately
+    let prewarm = null;
+    try {
+      if (dataModule.getDashboardData) {
+        prewarm = await dataModule.getDashboardData(true);
+        console.log('[Sync] Cache pre-warmed with fresh data');
+      }
+    } catch (warmErr) {
+      console.warn('[Sync] Could not pre-warm cache:', warmErr.message);
+    }
+
     res.json({
       success: true,
       entity: entity || 'all',
       ...result,
+      prewarmed: !!prewarm,
       timestamp: new Date().toISOString()
     });
   } catch (err) {

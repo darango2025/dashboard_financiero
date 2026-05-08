@@ -105,6 +105,11 @@
     .period-btn.active { background: var(--accent-blue); border-color: var(--accent-blue); color: white; }
     .logout-btn { padding: 6px 16px; background: transparent; border: 1px solid var(--border); color: var(--text-secondary); border-radius: 6px; cursor: pointer; font-size: 13px; transition: all 0.2s; }
     .logout-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
+    .sync-btn { padding: 6px 16px; background: var(--accent-green); color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; transition: opacity 0.2s; display: none; }
+    .sync-btn:hover { opacity: 0.9; }
+    .sync-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .sync-btn.spinning::before { content: ''; display: inline-block; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 6px; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .filter-active-indicator { display: none; padding: 4px 10px; background: var(--accent-cyan); color: white; border-radius: 12px; font-size: 11px; font-weight: 600; }
     .filter-active-indicator.visible { display: inline-block; }
     @media (max-width: 1200px) { .charts-grid { grid-template-columns: 1fr; } .kpi-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -125,18 +130,20 @@
     </div>
   </div>
 
-  <div class="header">
-    <h1>Dashboard de Cartera</h1>
-    <div class="header-info">
-      <span id="genDate"></span>
-      <span class="badge">ADATEC</span>
-      <span style="color: var(--text-muted); font-size: 12px;">NPROSERVER</span>
-      <a href="chatbot.html" style="color: var(--accent-cyan); text-decoration: none; font-size: 13px; padding: 6px 12px; border: 1px solid var(--accent-cyan); border-radius: 6px;">💬 Chatbot</a>
-      <button class="theme-toggle" id="themeToggle" title="Cambiar tema">🌙 Oscuro</button>
-      <span id="userDisplay" style="display:none;"></span>
-      <button class="logout-btn" id="logoutBtn" style="display:none;">Cerrar Sesión</button>
+    <div class="header">
+      <h1>Dashboard de Cartera</h1>
+      <div class="header-info">
+        <span id="genDate"></span>
+        <span id="dataSource" class="badge" style="background: var(--accent-purple); display: none;">RSales</span>
+        <button class="sync-btn" id="syncBtn" title="Sincronizar datos con RSales">🔄 Sincronizar</button>
+        <span class="badge">ADATEC</span>
+        <span style="color: var(--text-muted); font-size: 12px;">NPROSERVER</span>
+        <a href="chatbot.html" style="color: var(--accent-cyan); text-decoration: none; font-size: 13px; padding: 6px 12px; border: 1px solid var(--accent-cyan); border-radius: 6px;">💬 Chatbot</a>
+        <button class="theme-toggle" id="themeToggle" title="Cambiar tema">🌙 Oscuro</button>
+        <span id="userDisplay" style="display:none;"></span>
+        <button class="logout-btn" id="logoutBtn" style="display:none;">Cerrar Sesión</button>
+      </div>
     </div>
-  </div>
 
   <div class="container">
     <div class="temporal-filters">
@@ -537,7 +544,7 @@
     }
 
     async function verifyAuth() { if (!authToken) return false; try { const resp = await fetch('/api/verify', { headers: { 'Authorization': 'Bearer ' + authToken } }); const data = await resp.json(); return data.authenticated; } catch { return false; } }
-    function showDashboard() { document.getElementById('loginOverlay').classList.add('hidden'); document.getElementById('userDisplay').style.display = 'inline'; document.getElementById('userDisplay').textContent = 'naprolab'; document.getElementById('logoutBtn').style.display = 'inline'; document.getElementById('reportsBar').style.display = 'flex'; }
+    function showDashboard() { document.getElementById('loginOverlay').classList.add('hidden'); document.getElementById('userDisplay').style.display = 'inline'; document.getElementById('userDisplay').textContent = 'naprolab'; document.getElementById('logoutBtn').style.display = 'inline'; document.getElementById('reportsBar').style.display = 'flex'; document.getElementById('syncBtn').style.display = 'inline-block'; }
     function showLogin() { document.getElementById('loginOverlay').classList.remove('hidden'); document.getElementById('userDisplay').style.display = 'none'; document.getElementById('logoutBtn').style.display = 'none'; document.getElementById('reportsBar').style.display = 'none'; authToken = null; localStorage.removeItem('authToken'); }
 
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -624,21 +631,89 @@
       document.querySelectorAll('#clientesBody tr').forEach(row => { row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none'; });
     });
 
+    async function loadDashboardData(forceRefresh = false) {
+      const resp = await fetch('/api/data' + (forceRefresh ? '?refresh=true' : ''), {
+        headers: { 'Authorization': 'Bearer ' + authToken }
+      });
+      if (!resp.ok) {
+        const errData = await resp.json().catch(() => ({}));
+        throw new Error(errData.error || errData.details || 'HTTP ' + resp.status);
+      }
+      ALL_DATA = await resp.json();
+      CURRENT_DATA = null;
+
+      const sourceLabel = document.getElementById('dataSource');
+      if (ALL_DATA.source === 'rsales') {
+        sourceLabel.style.display = 'inline-block';
+        sourceLabel.textContent = 'RSales';
+      } else {
+        sourceLabel.style.display = 'none';
+      }
+
+      const updatedAt = ALL_DATA.generated_at || ALL_DATA.generado_en || new Date().toISOString();
+      document.getElementById('genDate').textContent = 'Actualizado: ' + new Date(updatedAt).toLocaleString('es-CO');
+      if (ALL_DATA.cached) {
+        document.getElementById('genDate').textContent += ' (cache)';
+      }
+      if (ALL_DATA.stale) {
+        document.getElementById('genDate').style.color = 'var(--accent-yellow)';
+      } else {
+        document.getElementById('genDate').style.color = '';
+      }
+
+      renderedTabs.clear();
+      Object.values(chartInstances).forEach(c => c.destroy());
+      chartInstances = {};
+      renderTabCharts('overview');
+    }
+
     async function init() {
       const authenticated = await verifyAuth();
       if (!authenticated) showLogin(); else showDashboard();
       try {
-        const resp = await fetch('data/dashboard_data.json');
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        ALL_DATA = await resp.json();
-        CURRENT_DATA = null;
-        document.getElementById('genDate').textContent = 'Actualizado: ' + new Date(ALL_DATA.generado_en).toLocaleString('es-CO');
-        renderTabCharts('overview');
+        await loadDashboardData();
       } catch (err) {
-        document.getElementById('genDate').textContent = 'Error: ' + err.message;
-        document.getElementById('genDate').style.color = 'var(--accent-red)';
+        // Fallback a datos locales estáticos
+        try {
+          const resp = await fetch('data/dashboard_data.json');
+          if (!resp.ok) throw new Error('HTTP ' + resp.status);
+          ALL_DATA = await resp.json();
+          CURRENT_DATA = null;
+          document.getElementById('genDate').textContent = 'Actualizado: ' + new Date(ALL_DATA.generado_en).toLocaleString('es-CO') + ' (local)';
+          document.getElementById('dataSource').style.display = 'none';
+          renderTabCharts('overview');
+        } catch (fallbackErr) {
+          document.getElementById('genDate').textContent = 'Error: ' + err.message;
+          document.getElementById('genDate').style.color = 'var(--accent-red)';
+        }
       }
     }
+
+    document.getElementById('syncBtn').addEventListener('click', async () => {
+      const btn = document.getElementById('syncBtn');
+      btn.disabled = true;
+      btn.classList.add('spinning');
+      btn.textContent = 'Sincronizando...';
+      try {
+        const syncResp = await fetch('/api/sync/rsales', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
+          },
+          body: JSON.stringify({ entity: 'all' })
+        });
+        if (!syncResp.ok) throw new Error('Sync failed');
+        await loadDashboardData(true);
+      } catch (err) {
+        document.getElementById('genDate').textContent = 'Error sync: ' + err.message;
+        document.getElementById('genDate').style.color = 'var(--accent-red)';
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('spinning');
+        btn.textContent = '🔄 Sincronizar';
+      }
+    });
 
     init();
   </script>
