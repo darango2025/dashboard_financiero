@@ -176,7 +176,10 @@
       <button class="tab-btn active" data-tab="overview">Resumen General</button>
       <button class="tab-btn" data-tab="evolution">Evolucion Financiera</button>
       <button class="tab-btn" data-tab="analisis">Analisis Detallado</button>
+      <button class="tab-btn" data-tab="sellers">Equipo de Ventas</button>
+      <button class="tab-btn" data-tab="products">Productos e Inventario</button>
       <button class="tab-btn" data-tab="tablas">Tablas</button>
+      <button class="tab-btn" data-tab="sync">Sincronizacion</button>
     </div>
 
     <div class="tab-content active" id="tab-overview">
@@ -209,6 +212,25 @@
       </div>
     </div>
 
+    <div class="tab-content" id="tab-sellers">
+      <div class="kpi-grid" id="sellersKpiGrid"></div>
+      <div class="charts-grid">
+        <div class="chart-card"><div class="chart-header"><div><div class="chart-title">Cartera por Vendedor</div><div class="chart-subtitle">Comparativo de saldo total</div></div></div><div class="chart-container"><canvas id="sellersChart"></canvas></div></div>
+        <div class="chart-card"><div class="chart-header"><div><div class="chart-title">Vencido vs Corriente</div><div class="chart-subtitle">Por vendedor</div></div></div><div class="chart-container"><canvas id="sellersStackedChart"></canvas></div></div>
+        <div class="chart-card full"><div class="chart-header"><div><div class="chart-title">Rendimiento del Equipo</div><div class="chart-subtitle">Documentos, cartera y pedidos</div></div></div><div class="chart-container tall"><canvas id="sellersPerformanceChart"></canvas></div></div>
+      </div>
+      <div class="chart-card" style="margin-top: 20px;"><div class="chart-header"><div><div class="chart-title">Detalle de Vendedores</div><div class="chart-subtitle">Datos completos del equipo de ventas</div></div></div><div class="table-wrapper"><table class="data-table" id="sellersTable"><thead><tr><th>Codigo</th><th>Nombre</th><th>Email</th><th>Telefono</th><th>Documentos</th><th>Cartera</th><th>Vencido</th><th>Pedidos</th><th>Ventas</th></tr></thead><tbody id="sellersBody"></tbody></table></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-products">
+      <div class="kpi-grid" id="productsKpiGrid"></div>
+      <div class="charts-grid">
+        <div class="chart-card"><div class="chart-header"><div><div class="chart-title">Top Productos por Stock</div><div class="chart-subtitle">Mayor cantidad en inventario</div></div></div><div class="chart-container"><canvas id="productsStockChart"></canvas></div></div>
+        <div class="chart-card"><div class="chart-header"><div><div class="chart-title">Valor de Inventario</div><div class="chart-subtitle">Stock x Precio unitario</div></div></div><div class="chart-container"><canvas id="inventoryValueChart"></canvas></div></div>
+      </div>
+      <div class="chart-card" style="margin-top: 20px;"><div class="chart-header"><div><div class="chart-title">Inventario Detallado</div><div class="chart-subtitle">Productos con stock disponible</div></div></div><div class="table-wrapper"><table class="data-table" id="inventoryTable"><thead><tr><th>Codigo</th><th>Producto</th><th>Bodega</th><th>Cantidad</th><th>Disponible</th><th>Valor</th></tr></thead><tbody id="inventoryBody"></tbody></table></div></div>
+    </div>
+
     <div class="tab-content" id="tab-tablas">
       <div class="filters">
         <span class="filter-label">Buscar:</span>
@@ -218,6 +240,23 @@
       </div>
       <div class="chart-card"><div class="chart-header"><div><div class="chart-title">Top Clientes Deudores</div><div class="chart-subtitle">Ordenable por columnas</div></div></div><div class="table-wrapper"><table class="data-table" id="clientesTable"><thead><tr><th data-col="codigo">Codigo</th><th data-col="nombre">Cliente</th><th data-col="nit">NIT</th><th data-col="ciudad">Ciudad</th><th data-col="documentos">Docs</th><th data-col="saldo">Saldo Total</th><th data-col="saldo_vencido">Saldo Vencido</th><th data-col="saldo_base">Saldo Original</th><th data-col="pct_vencido">% Vencido</th></tr></thead><tbody id="clientesBody"></tbody></table></div></div>
       <div class="chart-card" style="margin-top: 20px;"><div class="chart-header"><div><div class="chart-title">Cartera por Vendedor</div><div class="chart-subtitle">Detalle completo</div></div></div><div class="table-wrapper"><table class="data-table" id="vendedoresTable"><thead><tr><th data-col="codigo">Codigo</th><th data-col="nombre">Vendedor</th><th data-col="documentos">Docs</th><th data-col="saldo_total">Saldo Total</th><th data-col="saldo_vencido">Vencido</th><th data-col="saldo_corriente">Corriente</th><th data-col="dias_mora_promedio">Dias Mora Prom.</th></tr></thead><tbody id="vendedoresBody"></tbody></table></div></div>
+    </div>
+
+    <div class="tab-content" id="tab-sync">
+      <div class="chart-card" style="margin-bottom: 20px;">
+        <div class="chart-header"><div><div class="chart-title">Estado de Sincronizacion</div><div class="chart-subtitle">Conexion con RSales API</div></div></div>
+        <div id="syncStatusContainer" style="padding: 20px;">
+          <div id="syncStatusText" style="font-size: 14px; color: var(--text-secondary); line-height: 2;">
+            Cargando estado...
+          </div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header"><div><div class="chart-title">Endpoints Sincronizados</div><div class="chart-subtitle">Registros por modulo</div></div></div>
+        <div id="syncEndpointsContainer" style="padding: 20px;">
+          <div style="font-size: 14px; color: var(--text-secondary);">Ejecuta una sincronizacion para ver los detalles.</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -531,6 +570,122 @@
     function renderClientesTable() { const data = getActiveData(); const tbody = document.getElementById('clientesBody'); tbody.innerHTML = data.top_clientes.map(c => '<tr><td>' + c.codigo + '</td><td>' + c.nombre + '</td><td>' + (c.nit || '-') + '</td><td>' + (c.ciudad || '-') + '</td><td>' + c.documentos + '</td><td>' + fmtFull(c.saldo) + '</td><td style="color: var(--accent-red);">' + fmtFull(c.saldo_vencido) + '</td><td>' + fmtFull(c.saldo_base) + '</td><td>' + (c.saldo_vencido / c.saldo * 100).toFixed(1) + '%</td></tr>').join(''); const sel = document.getElementById('filterVendedor'); if (sel.options.length <= 1) { data.cartera_vendedor.forEach(v => { const opt = document.createElement('option'); opt.value = v.codigo; opt.textContent = v.nombre; sel.appendChild(opt); }); } }
     function renderVendedoresTable() { const data = getActiveData(); const tbody = document.getElementById('vendedoresBody'); tbody.innerHTML = data.cartera_vendedor.map(v => '<tr><td>' + v.codigo + '</td><td>' + v.nombre + '</td><td>' + v.documentos + '</td><td>' + fmtFull(v.saldo_total) + '</td><td style="color: var(--accent-red);">' + fmtFull(v.saldo_vencido) + '</td><td style="color: var(--accent-green);">' + fmtFull(v.saldo_corriente) + '</td><td>' + v.dias_mora_promedio + '</td></tr>').join(''); }
 
+    // ========== SELLERS TAB ==========
+    function renderSellersKPIs() {
+      const data = getActiveData();
+      const sellers = data.sellers_full || data.cartera_vendedor || [];
+      if (sellers.length === 0) { document.getElementById('sellersKpiGrid').innerHTML = ''; return; }
+      const totalCartera = sellers.reduce((s, v) => s + (v.cartera_total || v.saldo_total || 0), 0);
+      const totalVencida = sellers.reduce((s, v) => s + (v.cartera_vencida || v.saldo_vencido || 0), 0);
+      const totalPedidos = sellers.reduce((s, v) => s + (v.pedidos || 0), 0);
+      const totalVentas = sellers.reduce((s, v) => s + (v.ventas_total || 0), 0);
+      const kpis = [
+        { label: 'Total Vendedores', value: sellers.length, sub: 'Activos en cartera', cls: 'info' },
+        { label: 'Cartera del Equipo', value: fmtFull(totalCartera), sub: fmtFull(totalVencida) + ' vencida', cls: 'warning' },
+        { label: 'Total Pedidos', value: fmt(totalPedidos), sub: 'Ordenes gestionadas', cls: 'success' },
+        { label: 'Ventas Totales', value: fmtFull(totalVentas), sub: 'Valor facturado', cls: 'purple' }
+      ];
+      document.getElementById('sellersKpiGrid').innerHTML = kpis.map(kpi => '<div class="kpi-card ' + kpi.cls + '"><div class="kpi-label">' + kpi.label + '</div><div class="kpi-value">' + kpi.value + '</div><div class="kpi-sub">' + kpi.sub + '</div></div>').join('');
+    }
+
+    function renderSellersChart() {
+      const data = getActiveData();
+      const sellers = (data.sellers_full || data.cartera_vendedor || []).slice(0, 10);
+      if (sellers.length === 0) return;
+      loadChart('sellersChart', { type: 'bar', data: { labels: sellers.map(v => (v.nombre || v.name || v.codigo).substring(0, 20)), datasets: [{ label: 'Cartera Total', data: sellers.map(v => v.cartera_total || v.saldo_total || 0), backgroundColor: '#8b5cf6', borderRadius: 6 }] }, options: { ...chartDefaults, indexAxis: 'y', plugins: { ...chartDefaults.plugins, legend: { display: false } }, scales: { ...chartDefaults.scales, x: { ...chartDefaults.scales.x, ticks: { ...chartDefaults.scales.x.ticks, callback: v => fmt(v) } } } } });
+    }
+
+    function renderSellersStackedChart() {
+      const data = getActiveData();
+      const sellers = (data.sellers_full || data.cartera_vendedor || []).filter(v => v.codigo !== '101').slice(0, 15);
+      if (sellers.length === 0) return;
+      loadChart('sellersStackedChart', { type: 'bar', data: { labels: sellers.map(v => (v.nombre || v.name || v.codigo).substring(0, 15)), datasets: [{ label: 'Corriente', data: sellers.map(v => (v.cartera_total || v.saldo_total || 0) - (v.cartera_vencida || v.saldo_vencido || 0)), backgroundColor: '#10b981', borderRadius: 4 }, { label: 'Vencido', data: sellers.map(v => v.cartera_vencida || v.saldo_vencido || 0), backgroundColor: '#ef4444', borderRadius: 4 }] }, options: { ...chartDefaults, indexAxis: 'y', plugins: { ...chartDefaults.plugins, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + fmtFull(ctx.raw) } } }, scales: { ...chartDefaults.scales, x: { ...chartDefaults.scales.x, stacked: true, ticks: { ...chartDefaults.scales.x.ticks, callback: v => fmt(v) } }, y: { ...chartDefaults.scales.y, stacked: true } } } });
+    }
+
+    function renderSellersPerformanceChart() {
+      const data = getActiveData();
+      const sellers = (data.sellers_full || data.cartera_vendedor || []).slice(0, 10);
+      if (sellers.length === 0) return;
+      loadChart('sellersPerformanceChart', { type: 'bar', data: { labels: sellers.map(v => (v.nombre || v.name || v.codigo).substring(0, 15)), datasets: [{ label: 'Documentos', data: sellers.map(v => v.documentos || 0), backgroundColor: '#3b82f6', borderRadius: 4, yAxisID: 'y' }, { label: 'Pedidos', data: sellers.map(v => v.pedidos || 0), backgroundColor: '#06b6d4', borderRadius: 4, yAxisID: 'y' }, { label: 'Ventas', data: sellers.map(v => v.ventas_total || 0), backgroundColor: '#f59e0b', borderRadius: 4, yAxisID: 'y1' }] }, options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + (ctx.dataset.yAxisID === 'y1' ? fmtFull(ctx.raw) : fmt(ctx.raw)) } } }, scales: { x: { ...chartDefaults.scales.x }, y: { ...chartDefaults.scales.y, position: 'left', title: { display: true, text: 'Cantidad', color: '#94a3b8' }, ticks: { ...chartDefaults.scales.y.ticks, callback: v => fmt(v) } }, y1: { ...chartDefaults.scales.y, position: 'right', title: { display: true, text: 'Valor', color: '#94a3b8' }, ticks: { ...chartDefaults.scales.y.ticks, callback: v => fmt(v) }, grid: { drawOnChartArea: false } } } } });
+    }
+
+    function renderSellersTable() {
+      const data = getActiveData();
+      const sellers = data.sellers_full || data.cartera_vendedor || [];
+      const tbody = document.getElementById('sellersBody');
+      tbody.innerHTML = sellers.map(v => '<tr><td>' + (v.codigo || v.code) + '</td><td>' + (v.nombre || v.name || v.full_name || v.codigo) + '</td><td>' + (v.email || '-') + '</td><td>' + (v.telefono || v.phone || '-') + '</td><td>' + (v.documentos || 0) + '</td><td>' + fmtFull(v.cartera_total || v.saldo_total || 0) + '</td><td style="color: var(--accent-red);">' + fmtFull(v.cartera_vencida || v.saldo_vencido || 0) + '</td><td>' + (v.pedidos || 0) + '</td><td>' + fmtFull(v.ventas_total || 0) + '</td></tr>').join('');
+    }
+
+    // ========== PRODUCTS TAB ==========
+    function renderProductsKPIs() {
+      const data = getActiveData();
+      const inv = data.inventory || [];
+      const products = data.products || [];
+      const totalStock = inv.reduce((s, i) => s + (i.cantidad || 0), 0);
+      const totalValue = inv.reduce((s, i) => s + (i.valor || 0), 0);
+      const kpis = [
+        { label: 'Total Productos', value: products.length, sub: 'En catalogo', cls: 'info' },
+        { label: 'Stock Total', value: fmt(totalStock), sub: 'Unidades en inventario', cls: 'success' },
+        { label: 'Valor Inventario', value: fmtFull(totalValue), sub: 'Stock x precio', cls: 'purple' },
+        { label: 'Sin Stock', value: products.filter(p => (p.stock || 0) === 0).length, sub: 'Productos agotados', cls: 'warning' }
+      ];
+      document.getElementById('productsKpiGrid').innerHTML = kpis.map(kpi => '<div class="kpi-card ' + kpi.cls + '"><div class="kpi-label">' + kpi.label + '</div><div class="kpi-value">' + kpi.value + '</div><div class="kpi-sub">' + kpi.sub + '</div></div>').join('');
+    }
+
+    function renderProductsStockChart() {
+      const data = getActiveData();
+      const inv = (data.inventory || []).sort((a, b) => (b.cantidad || 0) - (a.cantidad || 0)).slice(0, 10);
+      if (inv.length === 0) return;
+      loadChart('productsStockChart', { type: 'bar', data: { labels: inv.map(i => (i.producto_nombre || i.producto_codigo).substring(0, 20)), datasets: [{ label: 'Cantidad', data: inv.map(i => i.cantidad || 0), backgroundColor: '#10b981', borderRadius: 6 }] }, options: { ...chartDefaults, indexAxis: 'y', plugins: { ...chartDefaults.plugins, legend: { display: false } }, scales: { ...chartDefaults.scales, x: { ...chartDefaults.scales.x, ticks: { ...chartDefaults.scales.x.ticks, callback: v => fmt(v) } } } } });
+    }
+
+    function renderInventoryValueChart() {
+      const data = getActiveData();
+      const inv = (data.inventory || []).sort((a, b) => (b.valor || 0) - (a.valor || 0)).slice(0, 10);
+      if (inv.length === 0) return;
+      loadChart('inventoryValueChart', { type: 'bar', data: { labels: inv.map(i => (i.producto_nombre || i.producto_codigo).substring(0, 20)), datasets: [{ label: 'Valor', data: inv.map(i => i.valor || 0), backgroundColor: '#f59e0b', borderRadius: 6 }] }, options: { ...chartDefaults, indexAxis: 'y', plugins: { ...chartDefaults.plugins, legend: { display: false }, tooltip: { callbacks: { label: ctx => fmtFull(ctx.raw) } } }, scales: { ...chartDefaults.scales, x: { ...chartDefaults.scales.x, ticks: { ...chartDefaults.scales.x.ticks, callback: v => fmt(v) } } } } });
+    }
+
+    function renderInventoryTable() {
+      const data = getActiveData();
+      const inv = data.inventory || [];
+      const tbody = document.getElementById('inventoryBody');
+      tbody.innerHTML = inv.map(i => '<tr><td>' + i.producto_codigo + '</td><td>' + (i.producto_nombre || i.producto_codigo) + '</td><td>' + (i.bodega || '-') + '</td><td>' + fmt(i.cantidad || 0) + '</td><td>' + fmt(i.disponible || 0) + '</td><td>' + fmtFull(i.valor || 0) + '</td></tr>').join('');
+    }
+
+    // ========== SYNC TAB ==========
+    async function renderSyncStatus() {
+      const container = document.getElementById('syncStatusText');
+      try {
+        const resp = await fetch('/api/sync/rsales?status=true', { headers: { 'Authorization': 'Bearer ' + authToken } });
+        const data = await resp.json();
+        if (data.synced) {
+          const lastSync = data.lastSync ? new Date(data.lastSync).toLocaleString('es-CO') : 'Desconocido';
+          const html = '<div style="display: flex; flex-direction: column; gap: 8px;">' +
+            '<div><strong style="color: var(--accent-green);">✓ Conectado a RSales</strong></div>' +
+            '<div>Ultima sincronizacion: <strong>' + lastSync + '</strong></div>' +
+            '<div>Endpoints activos: <strong>' + data.endpoints.filter(e => e.status === 'ok').length + '/' + data.endpoints.length + '</strong></div>' +
+            '</div>';
+          container.innerHTML = html;
+
+          // Render endpoints detail
+          const epContainer = document.getElementById('syncEndpointsContainer');
+          epContainer.innerHTML = data.endpoints.map(ep => {
+            const color = ep.status === 'ok' ? 'var(--accent-green)' : 'var(--accent-red)';
+            const icon = ep.status === 'ok' ? '✓' : '✗';
+            return '<div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border);">' +
+              '<span>' + icon + ' <strong>' + ep.endpoint + '</strong></span>' +
+              '<span style="color: ' + color + '">' + (ep.count || 0) + ' registros</span>' +
+              '</div>';
+          }).join('');
+        } else {
+          container.innerHTML = '<div style="color: var(--accent-yellow);">⚠ No hay datos sincronizados. Haz clic en "Sincronizar" para obtener datos de RSales.</div>';
+        }
+      } catch (err) {
+        container.innerHTML = '<div style="color: var(--accent-red);">✗ Error consultando estado: ' + err.message + '</div>';
+      }
+    }
+
     function renderTabCharts(tab) {
       if (renderedTabs.has(tab)) return;
       renderedTabs.add(tab);
@@ -538,7 +693,10 @@
         'overview': [renderKPIs, renderInsights, renderAgingChart, renderTipoDocChart, renderTopClientesChart, renderVendedorChart],
         'evolution': [renderFactVsRecaudo, renderCarteraEvol, renderEficiencia, renderPedidos, renderRecaudo],
         'analisis': [renderPareto, renderAnalisisInsights, renderCorrelacion, renderVendedorStacked],
-        'tablas': [renderClientesTable, renderVendedoresTable]
+        'sellers': [renderSellersKPIs, renderSellersChart, renderSellersStackedChart, renderSellersPerformanceChart, renderSellersTable],
+        'products': [renderProductsKPIs, renderProductsStockChart, renderInventoryValueChart, renderInventoryTable],
+        'tablas': [renderClientesTable, renderVendedoresTable],
+        'sync': [renderSyncStatus]
       };
       (renders[tab] || []).forEach(fn => fn());
     }
