@@ -20,28 +20,30 @@ module.exports = async (req, res) => {
 
   try {
     let data = orchestrator.getDashboardData();
-    
-    // If no data or force refresh, trigger sync
-    if (!data || forceRefresh) {
-      console.log('[Data] No cached data, triggering sync...');
+
+    // Only auto-sync on explicit refresh; cron/manual sync warms the cache
+    if (forceRefresh) {
+      console.log('[Data] Force refresh requested, triggering sync...');
       const master = await orchestrator.syncAllEndpoints();
       data = master.dashboard;
     }
 
     if (!data) {
-      return res.status(503).json({ error: 'Datos no disponibles. Intente sincronizar.' });
+      return res.status(503).json({
+        error: 'Datos no disponibles. La sincronización automática se ejecuta diariamente a las 6:00 UTC. Use el botón Sincronizar para actualizar ahora.'
+      });
     }
 
     res.json(data);
   } catch (err) {
     console.error('[Data] Error:', err.message);
-    
+
     // Try stale data
     const stale = orchestrator.getDashboardData();
     if (stale) {
       return res.json({ ...stale, stale: true, error: err.message });
     }
-    
+
     res.status(500).json({ error: 'Error obteniendo datos', details: err.message });
   }
 };

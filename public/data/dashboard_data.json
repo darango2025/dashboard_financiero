@@ -3892,5 +3892,16 @@
       ]
     }
   },
-  "generated_from": "data/cartera_export.xlsx"
+  "generated_from": "data/cartera_export.xlsx",
+  "version": "1.0",
+  "source": "static",
+  "customers_full": [],
+  "sellers_full": [],
+  "products": [],
+  "inventory": [],
+  "orders_summary": { "total": 0, "total_valor": 0, "por_estado": {}, "por_mes": {} },
+  "routes": [],
+  "payment_methods": [],
+  "factors": [],
+  "metadata": { "total_records": {}, "sync_timestamp": null }
 }
