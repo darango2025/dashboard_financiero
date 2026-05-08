@@ -17,6 +17,10 @@
     "api/reports/*.js": {
       "memory": 1024,
       "maxDuration": 60
+    },
+    "api/sync/*.js": {
+      "memory": 1024,
+      "maxDuration": 60
     }
   }
 }
